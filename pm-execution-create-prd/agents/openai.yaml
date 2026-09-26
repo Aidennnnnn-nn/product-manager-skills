@@ -1,0 +1,7 @@
+interface:
+  display_name: "标准产品需求文档"
+  short_description: "创建标准中文功能型 PRD"
+  default_prompt: "使用 $pm-execution-create-prd 按标准模板创建一份可评审、可开发、可验收的中文功能型 PRD。"
+
+policy:
+  allow_implicit_invocation: true

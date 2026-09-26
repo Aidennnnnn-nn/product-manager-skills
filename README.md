@@ -1,70 +1,79 @@
-# AI MATRIX 产品交付工作流 Skill
+# 产品经理工作 Skills
 
-这是一个面向产品经理和产品设计协作的 Codex Skill，用于把 AI MATRIX 需求稳定推进到：
+这是一组面向产品经理工作的 Codex Skills，覆盖个人产品工作标准、中文功能型 PRD 和 HTML/Figma 产品原型。
 
-```text
-范围确认 -> PRD -> HTML 原型 -> Figma 原型 -> 回读交付
-```
+当前版本：`V1.0`
 
-它保留规格驱动工作的阶段基线和确认门禁，但默认不扩展到研发、测试和发布。
+## 包含的 Skills
 
-## 适用范围
+| Skill | 用途 |
+| --- | --- |
+| `product-work-standards` | 区分个人标准、项目规范和当前任务要求，并路由到适用的专项 Skill |
+| `pm-execution-create-prd` | 创建、补写和评审可进入原型、研发与验收评审的中文功能型 PRD |
+| `pm-prototype-workflow` | 以 HTML 为设计源完成 UI、交互、状态覆盖和可编辑 Figma 原型交付 |
 
-- AI运维平台
-- AI数据中台
-- AI服务中台（AI Service Center）
-- 数智管理基座
-- AI MATRIX 跨平台全局规则
-
-Skill 同时提供产品边界、文件归档、需求池、PRD 追踪、HTML-first 原型和 Figma 官方 MCP 交付规范。
+三个 Skill 均按跨项目、可公开阅读和可独立安装的方式维护，不包含特定公司、品牌、项目目录、内部账号、私有链接或未脱敏业务数据。
 
 ## 安装
 
+克隆仓库：
+
 ```bash
-git clone https://github.com/Aidennnnnn-nn/ai-matrix-product-workflow.git \
-  ~/.codex/skills/ai-matrix-product-workflow
+git clone https://github.com/Aidennnnnn-nn/product-manager-skills.git
 ```
 
-重新打开 Codex 会话后即可自动识别，也可以显式调用：
+复制需要的 Skill 到 Codex Skills 目录：
 
-```text
-使用 $ai-matrix-product-workflow 梳理这批需求的产品归属，并输出 PRD 草稿。
+```bash
+mkdir -p ~/.codex/skills
+cp -R product-manager-skills/product-work-standards ~/.codex/skills/
+cp -R product-manager-skills/pm-execution-create-prd ~/.codex/skills/
+cp -R product-manager-skills/pm-prototype-workflow ~/.codex/skills/
 ```
 
+重新打开 Codex 会话后，可自动匹配任务，也可以显式调用：
+
 ```text
-使用 $ai-matrix-product-workflow 根据已确认 PRD 输出可评审的 HTML 原型。
+使用 $product-work-standards 判断这项规则属于个人标准还是项目规范。
+使用 $pm-execution-create-prd 创建一份可评审、可开发、可验收的中文 PRD。
+使用 $pm-prototype-workflow 根据已确认 PRD 制作可交互 HTML 原型。
 ```
 
+## 默认工作流
+
 ```text
-使用 $ai-matrix-product-workflow 将已确认 HTML 写入目标 Figma 文件并完成回读。
+目标与范围确认
+  -> PRD Draft
+  -> 用户确认 PRD
+  -> HTML 原型 Draft
+  -> 用户确认 HTML
+  -> 写入可编辑 Figma 原型
+  -> 截图与结构回读
 ```
 
-## 文件结构
+项目根目录的规则和用户当前明确要求始终优先。项目专属品牌、菜单、业务对象、权限边界、目录结构和文件命名应保留在项目内，不应直接写入这些通用 Skills。
+
+## 版本规则
+
+- 当前公开版本为 `V1.0`，对应 Git Tag `v1.0`。
+- 普通内容维护不自动改变版本号。
+- 只有维护者明确决定后，才创建新的版本 Tag 或 GitHub Release。
+- 发布前必须检查 Frontmatter、内部引用、私有路径、敏感信息和项目专属内容。
+
+## 依赖说明
+
+- 需要支持 Skills 的 Codex 环境。
+- PRD 中需要复杂业务图示时，可配合 `archify` 和 `drawio` Skills；环境中没有这些依赖时，应保留 Mermaid 语义源并说明未生成的附件。
+- Figma 交付需要可用的 Figma 桌面端、本地插件或官方 Figma MCP，具体路径由 `pm-prototype-workflow` 和当前项目规则决定。
+
+## 仓库结构
 
 ```text
-ai-matrix-product-workflow/
-├── SKILL.md
+product-manager-skills/
 ├── README.md
-├── agents/
-│   └── openai.yaml
-└── references/
-    ├── 产品边界与归档规则.md
-    ├── PRD与原型阶段门禁.md
-    └── Goodwe_UI与Figma交付规范.md
+├── VERSION
+├── CHANGELOG.md
+├── product-work-standards/
+├── pm-execution-create-prd/
+└── pm-prototype-workflow/
 ```
-
-## 使用原则
-
-- 当前项目的 `AGENTS.md` 和用户最新指令优先于公共 Skill。
-- PRD 未确认，不进入 HTML。
-- HTML 未确认，不写入 Figma。
-- Figma 使用官方 MCP，保留原生可编辑结构。
-- 默认不生成技术方案、研发任务、生产代码、测试和发布材料。
-- 公共仓库不保存组织内部链接、账号信息或本机绝对路径。
-
-## 依赖
-
-- 支持 Skills 的 Codex 环境。
-- Figma 阶段需要已配置并可用的 Figma 官方 MCP。
-- 若环境中同时提供 PRD、Figma 或 HTML 原型 Skill，本 Skill 会按阶段调用它们，但产品边界和门禁仍以本 Skill 为准。
-

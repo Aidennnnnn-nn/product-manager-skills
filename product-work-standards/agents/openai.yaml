@@ -1,0 +1,7 @@
+interface:
+  display_name: "个人产品工作标准"
+  short_description: "统一 PRD、原型和项目规则分层"
+  default_prompt: "使用 $product-work-standards 判断个人标准与项目规范，并路由到适用的 PRD 或原型 Skill。"
+
+policy:
+  allow_implicit_invocation: true
