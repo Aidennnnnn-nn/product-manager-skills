@@ -1,0 +1,385 @@
+{
+  "library": "Lucide",
+  "version": "1.67.0",
+  "license": "ISC",
+  "grid": "0 0 24 24",
+  "strokeWidth": 2,
+  "svgSource": "https://unpkg.com/lucide-static@1.67.0/icons/<name>.svg",
+  "figmaSource": "https://www.figma.com/community/file/983840782520404978/lucide-icons-full-collection-1767-icons",
+  "builtAt": "2026-11-03T15:09:07.720Z",
+  "groups": [
+    {
+      "file": "icons.js",
+      "constName": "ICON",
+      "count": 54,
+      "icons": [
+        {
+          "key": "menu",
+          "upstream": "menu",
+          "use": "展开菜单"
+        },
+        {
+          "key": "search",
+          "upstream": "search",
+          "use": "查询"
+        },
+        {
+          "key": "reset",
+          "upstream": "rotate-ccw",
+          "use": "重置"
+        },
+        {
+          "key": "refresh",
+          "upstream": "refresh-cw",
+          "use": "刷新"
+        },
+        {
+          "key": "plus",
+          "upstream": "plus",
+          "use": "新增"
+        },
+        {
+          "key": "minus",
+          "upstream": "minus",
+          "use": "移除"
+        },
+        {
+          "key": "close",
+          "upstream": "x",
+          "use": "关闭"
+        },
+        {
+          "key": "check",
+          "upstream": "check",
+          "use": "完成"
+        },
+        {
+          "key": "chevronDown",
+          "upstream": "chevron-down",
+          "use": "展开"
+        },
+        {
+          "key": "chevronUp",
+          "upstream": "chevron-up",
+          "use": "收起"
+        },
+        {
+          "key": "chevronRight",
+          "upstream": "chevron-right",
+          "use": "右向"
+        },
+        {
+          "key": "chevronLeft",
+          "upstream": "chevron-left",
+          "use": "左向"
+        },
+        {
+          "key": "back",
+          "upstream": "arrow-left",
+          "use": "返回"
+        },
+        {
+          "key": "forward",
+          "upstream": "arrow-right",
+          "use": "下一步"
+        },
+        {
+          "key": "more",
+          "upstream": "ellipsis",
+          "use": "更多操作"
+        },
+        {
+          "key": "external",
+          "upstream": "external-link",
+          "use": "外部打开"
+        },
+        {
+          "key": "filter",
+          "upstream": "filter",
+          "use": "筛选"
+        },
+        {
+          "key": "settings",
+          "upstream": "settings",
+          "use": "设置"
+        },
+        {
+          "key": "bell",
+          "upstream": "bell",
+          "use": "通知"
+        },
+        {
+          "key": "logout",
+          "upstream": "log-out",
+          "use": "退出"
+        },
+        {
+          "key": "user",
+          "upstream": "user",
+          "use": "账号"
+        },
+        {
+          "key": "globe",
+          "upstream": "globe",
+          "use": "语言/全局"
+        },
+        {
+          "key": "home",
+          "upstream": "house",
+          "use": "首页"
+        },
+        {
+          "key": "grid",
+          "upstream": "layout-grid",
+          "use": "项目/应用"
+        },
+        {
+          "key": "dashboard",
+          "upstream": "layout-dashboard",
+          "use": "工作台/平台"
+        },
+        {
+          "key": "folder",
+          "upstream": "folder",
+          "use": "目录"
+        },
+        {
+          "key": "file",
+          "upstream": "file",
+          "use": "文件"
+        },
+        {
+          "key": "files",
+          "upstream": "files",
+          "use": "多文件"
+        },
+        {
+          "key": "upload",
+          "upstream": "upload",
+          "use": "上传"
+        },
+        {
+          "key": "download",
+          "upstream": "download",
+          "use": "下载/导出"
+        },
+        {
+          "key": "trash",
+          "upstream": "trash-2",
+          "use": "删除"
+        },
+        {
+          "key": "edit",
+          "upstream": "pencil",
+          "use": "编辑"
+        },
+        {
+          "key": "eye",
+          "upstream": "eye",
+          "use": "查看"
+        },
+        {
+          "key": "copy",
+          "upstream": "copy",
+          "use": "复制"
+        },
+        {
+          "key": "link",
+          "upstream": "link",
+          "use": "链接"
+        },
+        {
+          "key": "image",
+          "upstream": "image",
+          "use": "图片"
+        },
+        {
+          "key": "listOrdered",
+          "upstream": "list-ordered",
+          "use": "有序列表"
+        },
+        {
+          "key": "alignCenter",
+          "upstream": "align-center",
+          "use": "居中对齐"
+        },
+        {
+          "key": "circlePlus",
+          "upstream": "circle-plus",
+          "use": "添加（圆）"
+        },
+        {
+          "key": "calendar",
+          "upstream": "calendar",
+          "use": "日期"
+        },
+        {
+          "key": "clock",
+          "upstream": "clock",
+          "use": "时间"
+        },
+        {
+          "key": "info",
+          "upstream": "info",
+          "use": "说明"
+        },
+        {
+          "key": "success",
+          "upstream": "circle-check",
+          "use": "成功"
+        },
+        {
+          "key": "warning",
+          "upstream": "circle-alert",
+          "use": "警告"
+        },
+        {
+          "key": "error",
+          "upstream": "circle-x",
+          "use": "失败"
+        },
+        {
+          "key": "danger",
+          "upstream": "triangle-alert",
+          "use": "风险提示"
+        },
+        {
+          "key": "loading",
+          "upstream": "loader-circle",
+          "use": "加载"
+        },
+        {
+          "key": "list",
+          "upstream": "list",
+          "use": "列表"
+        },
+        {
+          "key": "table",
+          "upstream": "table",
+          "use": "表格"
+        },
+        {
+          "key": "sliders",
+          "upstream": "sliders-horizontal",
+          "use": "筛选条件"
+        },
+        {
+          "key": "expand",
+          "upstream": "maximize-2",
+          "use": "放大"
+        },
+        {
+          "key": "collapse",
+          "upstream": "minimize-2",
+          "use": "缩小"
+        },
+        {
+          "key": "panel",
+          "upstream": "panel-left",
+          "use": "侧栏"
+        },
+        {
+          "key": "sparkles",
+          "upstream": "sparkles",
+          "use": "AI/智能"
+        }
+      ]
+    },
+    {
+      "file": "icons-domain.js",
+      "constName": "ICON_DOMAIN",
+      "count": 12,
+      "icons": [
+        {
+          "key": "filePlus",
+          "upstream": "file-plus-2",
+          "use": "文件新增"
+        },
+        {
+          "key": "fileText",
+          "upstream": "file-text",
+          "use": "文件摘要"
+        },
+        {
+          "key": "chat",
+          "upstream": "message-square-text",
+          "use": "问答对"
+        },
+        {
+          "key": "chunk",
+          "upstream": "blocks",
+          "use": "分块"
+        },
+        {
+          "key": "vector",
+          "upstream": "binary",
+          "use": "向量"
+        },
+        {
+          "key": "store",
+          "upstream": "database",
+          "use": "存储/库"
+        },
+        {
+          "key": "similar",
+          "upstream": "git-compare",
+          "use": "相似检测"
+        },
+        {
+          "key": "tag",
+          "upstream": "tag",
+          "use": "标注"
+        },
+        {
+          "key": "review",
+          "upstream": "badge-check",
+          "use": "审核"
+        },
+        {
+          "key": "publish",
+          "upstream": "send",
+          "use": "发布"
+        },
+        {
+          "key": "scan",
+          "upstream": "scan-search",
+          "use": "检测"
+        },
+        {
+          "key": "package",
+          "upstream": "box",
+          "use": "打包/版本"
+        }
+      ]
+    }
+  ],
+  "composites": [
+    {
+      "key": "fileChat",
+      "composedOf": [
+        "file",
+        "message-square-text"
+      ],
+      "scale": 0.5,
+      "use": "文件问答（纸+气泡）"
+    },
+    {
+      "key": "fileDone",
+      "composedOf": [
+        "file",
+        "circle-check"
+      ],
+      "scale": 0.46,
+      "use": "文件已处理"
+    },
+    {
+      "key": "fileWarning",
+      "composedOf": [
+        "file",
+        "triangle-alert"
+      ],
+      "scale": 0.46,
+      "use": "文件异常"
+    }
+  ]
+}

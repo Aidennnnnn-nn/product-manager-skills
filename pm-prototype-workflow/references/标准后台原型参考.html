@@ -1,0 +1,538 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>标准后台原型参考</title>
+  <style>
+    :root {
+      --brand: #FF323A;
+      --ink: #090E1D;
+      --muted: rgba(9,14,29,.60);
+      --subtle: rgba(9,14,29,.40);
+      --canvas: #F8F8F8;
+      --surface: #FFFFFF;
+      --soft: #F9F9F9;
+      --line: #E4E4E4;
+      --line-soft: #EEEEEE;
+      --success: #00C972;
+      --info: #1677FF;
+      --warning: #FE7400;
+      --danger: #D8232A;
+      --space-1: 4px;
+      --space-2: 8px;
+      --space-3: 12px;
+      --space-4: 16px;
+      --space-5: 20px;
+      --space-6: 24px;
+      --space-8: 32px;
+      --topbar: 48px;
+      --subnav: 30px;
+      --rail: 220px;
+      --rail-collapsed: 60px;
+      --control: 40px;
+      --button: 36px;
+      --radius: 12px;
+      --shadow: 0 12px 32px rgba(9,14,29,.12);
+      font-family: Poppins, "PingFang SC", "Microsoft YaHei", sans-serif;
+      color: var(--ink);
+      background: #E9ECEF;
+    }
+
+    * { box-sizing: border-box; letter-spacing: 0; }
+    html, body { margin: 0; min-width: 1180px; min-height: 100%; background: #E9ECEF; }
+    body { padding: 28px; font-size: 14px; }
+    button, input, select { font: inherit; }
+    button { color: inherit; cursor: pointer; }
+    button:focus-visible, input:focus-visible, select:focus-visible {
+      outline: 2px solid rgba(255,50,58,.32);
+      outline-offset: 2px;
+    }
+    .reference-bar {
+      width: 1440px;
+      height: 34px;
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      margin: 0 auto 8px;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .reference-bar strong { color: var(--ink); font-weight: 600; }
+    .state-controls { display: flex; align-items: center; gap: 4px; }
+    .state-controls button {
+      height: 28px;
+      padding: 0 10px;
+      border: 1px solid var(--line);
+      border-radius: 8px;
+      background: var(--surface);
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .state-controls button[aria-pressed="true"] {
+      border-color: var(--brand);
+      color: var(--brand);
+      background: #FFF5F5;
+    }
+
+    .app {
+      position: relative;
+      width: 1440px;
+      height: 900px;
+      overflow: hidden;
+      margin: 0 auto;
+      background: var(--canvas);
+      box-shadow: 0 20px 48px rgba(9,14,29,.16);
+    }
+    .topbar {
+      position: absolute;
+      z-index: 10;
+      inset: 0 0 auto;
+      height: var(--topbar);
+      display: flex;
+      align-items: center;
+      background: var(--surface);
+      border-bottom: 1px solid var(--line-soft);
+    }
+    .brand { width: 300px; padding: 0 16px; color: var(--ink); font-size: 16px; font-weight: 600; }
+    .brand span { color: var(--brand); margin-right: 8px; font-weight: 800; }
+    .topbar-space { flex: 1; }
+    .top-icon, .avatar-button {
+      width: 28px;
+      height: 28px;
+      display: grid;
+      place-items: center;
+      margin-right: 12px;
+      border: 0;
+      border-radius: 8px;
+      background: transparent;
+    }
+    .top-icon:hover, .avatar-button:hover { background: var(--soft); }
+    .avatar-button { margin-right: 16px; border-radius: 50%; background: var(--ink); color: #fff; font-size: 12px; }
+
+    .rail {
+      position: absolute;
+      z-index: 8;
+      top: var(--topbar);
+      bottom: 0;
+      left: 0;
+      width: var(--rail);
+      display: flex;
+      flex-direction: column;
+      background: var(--surface);
+      border-right: 1px solid var(--line-soft);
+      transition: width .18s ease;
+    }
+    .rail.collapsed { width: var(--rail-collapsed); }
+    .rail-head { padding: 10px 12px 0; }
+    .rail-toggle, .rail-item {
+      position: relative;
+      width: 100%;
+      height: 36px;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      background: transparent;
+      color: var(--muted);
+      text-align: left;
+    }
+    .rail-toggle { padding: 0 10px; border-color: var(--line); }
+    .rail-item { padding: 0 10px; }
+    .rail-item:hover, .rail-toggle:hover { background: var(--soft); }
+    .rail-item.active { color: var(--brand); background: #FFF8F8; border-color: #F2D8D9; }
+    .rail-label { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+    .rail.collapsed .rail-label, .rail.collapsed .rail-toggle .chevron { display: none; }
+    .rail.collapsed .rail-toggle, .rail.collapsed .rail-item { justify-content: center; padding: 0; }
+    .rail-list { display: grid; gap: 5px; margin: 21px 12px 0; }
+    .rail-item::after {
+      content: attr(data-label);
+      position: absolute;
+      left: 46px;
+      top: 50%;
+      z-index: 20;
+      display: none;
+      transform: translateY(-50%);
+      padding: 7px 9px;
+      border-radius: 6px;
+      color: #fff;
+      background: var(--ink);
+      font-size: 12px;
+      white-space: nowrap;
+    }
+    .rail.collapsed .rail-item:hover::after { display: block; }
+    .rail-bottom { margin-top: auto; padding: 10px 12px 12px; border-top: 1px solid var(--line-soft); }
+
+    .subnav {
+      position: absolute;
+      z-index: 6;
+      top: var(--topbar);
+      right: 0;
+      left: var(--rail);
+      height: var(--subnav);
+      display: flex;
+      align-items: stretch;
+      gap: 4px;
+      padding: 0 24px;
+      background: var(--surface);
+      border-bottom: 1px solid var(--line-soft);
+      transition: left .18s ease;
+    }
+    .rail.collapsed ~ .subnav { left: var(--rail-collapsed); }
+    .subtab {
+      height: 30px;
+      display: inline-flex;
+      align-items: center;
+      padding: 0 12px;
+      border: 0;
+      border-bottom: 2px solid transparent;
+      background: transparent;
+      color: var(--muted);
+      font-size: 12px;
+    }
+    .subtab.active { color: var(--ink); border-bottom-color: var(--brand); }
+
+    .workspace {
+      position: absolute;
+      top: calc(var(--topbar) + var(--subnav));
+      right: 0;
+      bottom: 0;
+      left: var(--rail);
+      overflow: auto;
+      padding: 16px 16px 24px;
+      transition: left .18s ease;
+    }
+    .rail.collapsed ~ .subnav ~ .workspace { left: var(--rail-collapsed); }
+    .breadcrumb {
+      height: 18px;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      color: var(--muted);
+      font-size: 12px;
+      line-height: 18px;
+    }
+    .breadcrumb strong { color: var(--ink); font-weight: 500; }
+    .page-header {
+      min-height: 66px;
+      display: flex;
+      align-items: flex-start;
+      justify-content: space-between;
+      padding: 7px 4px 14px;
+    }
+    .page-header h1 { margin: 0; font-size: 20px; line-height: 28px; font-weight: 600; }
+    .page-actions { display: flex; align-items: center; gap: 8px; padding-top: 3px; }
+    .button {
+      height: var(--button);
+      display: inline-flex;
+      align-items: center;
+      justify-content: center;
+      gap: 7px;
+      padding: 0 15px;
+      border: 1px solid var(--line);
+      border-radius: 12px;
+      background: var(--surface);
+      color: var(--ink);
+      font-size: 14px;
+      line-height: 22px;
+    }
+    .button:hover { border-color: #C5C9CE; background: var(--soft); }
+    .button.primary { border-color: var(--brand); background: var(--brand); color: #fff; }
+    .button.primary:hover { background: #E82D35; }
+    .button.danger { border-color: var(--danger); background: var(--danger); color: #fff; }
+    .button:disabled { cursor: not-allowed; opacity: .4; }
+    .icon-button {
+      width: 36px;
+      height: 36px;
+      display: inline-grid;
+      place-items: center;
+      border: 1px solid transparent;
+      border-radius: 8px;
+      background: transparent;
+    }
+    .icon-button:hover { border-color: var(--line); background: var(--soft); }
+    .icon-button.danger { color: var(--danger); }
+    .ico { width: 18px; height: 18px; display: inline-block; flex: 0 0 auto; }
+    .ico svg { width: 100%; height: 100%; display: block; fill: none; stroke: currentColor; stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round; }
+
+    .filters, .content-panel {
+      border: 1px solid var(--line);
+      border-radius: var(--radius);
+      background: var(--surface);
+    }
+    .filters { display: grid; grid-template-columns: repeat(4, minmax(150px, 1fr)) auto; gap: 12px; padding: 16px; }
+    .field { min-width: 0; display: grid; gap: 6px; }
+    .field label { color: var(--muted); font-size: 12px; line-height: 18px; }
+    .control {
+      width: 100%;
+      height: var(--control);
+      padding: 0 15px;
+      border: 1px solid rgba(9,14,29,.12);
+      border-radius: 12px;
+      outline: 0;
+      background: var(--surface);
+      color: var(--ink);
+      font-size: 14px;
+    }
+    .control::placeholder { color: var(--subtle); }
+    .control:hover { border-color: rgba(9,14,29,.32); }
+    .control:focus { border-color: var(--brand); box-shadow: 0 0 0 2px rgba(255,50,58,.16); }
+    select.control { appearance: none; background: var(--surface); }
+    .select-wrap { position: relative; }
+    .select-wrap .ico { position: absolute; top: 11px; right: 12px; color: var(--muted); pointer-events: none; }
+    .filter-actions { display: flex; align-items: flex-end; gap: 8px; }
+
+    .content-panel { margin-top: 16px; overflow: hidden; }
+    .table-wrap { min-height: 480px; overflow: auto; }
+    table { width: 100%; border-collapse: collapse; table-layout: fixed; }
+    th, td { height: 52px; padding: 0 16px; border-bottom: 1px solid var(--line-soft); text-align: left; white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+    th { height: 40px; color: var(--muted); background: var(--soft); font-size: 12px; font-weight: 500; }
+    td { color: var(--ink); font-size: 14px; }
+    tbody tr:hover { background: #FCFCFC; }
+    th:first-child, td:first-child { width: 64px; padding-left: 20px; }
+    th:nth-child(2), td:nth-child(2) { width: 20%; }
+    th:nth-child(3), td:nth-child(3) { width: 25%; }
+    th:nth-child(4), td:nth-child(4) { width: 18%; }
+    th:nth-child(5), td:nth-child(5) { width: 16%; }
+    th:last-child, td:last-child { width: 190px; }
+    .row-actions { display: flex; align-items: center; gap: 14px; }
+    .text-action { padding: 0; border: 0; background: none; color: var(--info); font-size: 14px; }
+    .text-action.danger { color: var(--danger); }
+    .status { display: inline-flex; align-items: center; gap: 6px; color: var(--success); font-size: 12px; }
+    .status::before { content: ""; width: 7px; height: 7px; border-radius: 50%; background: currentColor; }
+    .status.pending { color: var(--warning); }
+    .status.disabled { color: var(--subtle); }
+    .pagination { height: 56px; display: flex; align-items: center; gap: 8px; padding: 0 16px 0 20px; border-top: 1px solid var(--line-soft); }
+    .pagination .grow { flex: 1; }
+    .pagination .total { color: var(--muted); font-size: 12px; }
+    .page-button { min-width: 30px; height: 30px; padding: 0 8px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface); font-size: 12px; }
+    .page-button.active { border-color: var(--brand); background: var(--brand); color: #fff; }
+    .page-button:disabled { cursor: not-allowed; opacity: .35; }
+
+    .state-panel { min-height: 480px; display: grid; place-items: center; padding: 40px; text-align: center; }
+    .state-panel[hidden] { display: none; }
+    .state-icon { width: 56px; height: 56px; display: grid; place-items: center; margin: 0 auto 14px; border-radius: 50%; background: var(--soft); color: var(--muted); }
+    .state-icon.info { color: var(--info); background: #EEF5FF; }
+    .state-icon.danger { color: var(--danger); background: #FFF0F0; }
+    .state-panel h2 { margin: 0 0 6px; font-size: 16px; font-weight: 500; }
+    .state-panel p { max-width: 320px; margin: 0 0 16px; color: var(--muted); font-size: 12px; line-height: 20px; }
+    .skeleton-list { width: 80%; display: grid; gap: 14px; }
+    .skeleton { height: 34px; border-radius: 8px; background: #F0F1F2; }
+
+    .overlay { position: fixed; z-index: 100; inset: 0; display: none; background: rgba(9,14,29,.38); }
+    .overlay.open { display: block; }
+    .drawer { position: absolute; top: 0; right: 0; bottom: 0; width: 560px; display: flex; flex-direction: column; background: var(--surface); box-shadow: var(--shadow); }
+    .drawer-head { min-height: 64px; display: flex; align-items: center; gap: 12px; padding: 0 20px; border-bottom: 1px solid var(--line); }
+    .drawer-head h2 { margin: 0; font-size: 16px; font-weight: 600; }
+    .drawer-head .icon-button { margin-left: auto; }
+    .drawer-body { flex: 1; overflow: auto; padding: 0 20px 24px; }
+    .drawer-section { padding: 20px 0; border-bottom: 1px solid var(--line); }
+    .drawer-section:last-child { border-bottom: 0; }
+    .drawer-section h3 { margin: 0 0 16px; font-size: 14px; font-weight: 600; }
+    .form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 16px 12px; }
+    .form-grid .span-2 { grid-column: 1 / -1; }
+    .drawer-foot { min-height: 64px; display: flex; align-items: center; justify-content: flex-end; gap: 8px; padding: 12px 20px; border-top: 1px solid var(--line); }
+    .detail-list { display: grid; grid-template-columns: 112px 1fr; gap: 14px 12px; margin: 0; }
+    .detail-list dt { color: var(--muted); }
+    .detail-list dd { margin: 0; color: var(--ink); }
+
+    .modal-shell { position: fixed; z-index: 120; inset: 0; display: none; place-items: center; background: rgba(9,14,29,.38); }
+    .modal-shell.open { display: grid; }
+    .modal { width: 420px; border-radius: 12px; background: var(--surface); box-shadow: var(--shadow); }
+    .modal-head { display: flex; align-items: center; gap: 12px; padding: 18px 20px 10px; }
+    .modal-head h2 { margin: 0; font-size: 16px; font-weight: 600; }
+    .modal-head .icon-button { margin-left: auto; }
+    .modal-body { padding: 8px 20px 20px; color: var(--muted); line-height: 21px; }
+    .modal-body strong { color: var(--ink); }
+    .modal-foot { display: flex; justify-content: flex-end; gap: 8px; padding: 12px 20px; border-top: 1px solid var(--line); }
+    .toast { position: fixed; z-index: 140; top: 64px; left: 50%; display: none; align-items: center; gap: 8px; transform: translateX(-50%); padding: 10px 14px; border: 1px solid #BFEED7; border-radius: 8px; background: #F2FCF7; color: #087E48; box-shadow: var(--shadow); font-size: 12px; }
+    .toast.show { display: flex; }
+
+    @media (max-width: 1500px) {
+      body { padding: 12px; }
+      .reference-bar, .app { margin-left: 0; margin-right: 0; }
+    }
+  </style>
+</head>
+<body>
+  <div class="reference-bar">
+    <strong>标准后台原型参考 · 1440 × 900</strong>
+    <div class="state-controls" aria-label="参考状态切换">
+      <span>状态参考：</span>
+      <button type="button" data-state="default" aria-pressed="true">默认</button>
+      <button type="button" data-state="loading" aria-pressed="false">加载</button>
+      <button type="button" data-state="empty" aria-pressed="false">空</button>
+      <button type="button" data-state="error" aria-pressed="false">错误</button>
+      <button type="button" data-state="permission" aria-pressed="false">无权限</button>
+    </div>
+  </div>
+
+  <div class="app" id="app">
+    <header class="topbar">
+      <div class="brand"><span>管理后台</span>标准框架</div>
+      <div class="topbar-space"></div>
+      <button class="top-icon" type="button" aria-label="语言切换"><span class="ico" data-icon="globe"></span></button>
+      <button class="avatar-button" type="button" aria-label="个人菜单">U</button>
+    </header>
+
+    <aside class="rail collapsed" id="rail" aria-label="一级功能导航">
+      <div class="rail-head"><button class="rail-toggle" type="button" id="railToggle" aria-label="收起或展开导航"><span class="ico" data-icon="menu"></span><span class="rail-label">功能导航</span><span class="ico chevron" data-icon="chevronLeft"></span></button></div>
+      <nav class="rail-list">
+        <button class="rail-item" type="button" data-label="工作台"><span class="ico" data-icon="dashboard"></span><span class="rail-label">工作台</span></button>
+        <button class="rail-item active" type="button" data-label="用户管理"><span class="ico" data-icon="user"></span><span class="rail-label">用户管理</span></button>
+        <button class="rail-item" type="button" data-label="组织管理"><span class="ico" data-icon="grid"></span><span class="rail-label">组织管理</span></button>
+        <button class="rail-item" type="button" data-label="权限管理"><span class="ico" data-icon="shield"></span><span class="rail-label">权限管理</span></button>
+        <button class="rail-item" type="button" data-label="系统设置"><span class="ico" data-icon="settings"></span><span class="rail-label">系统设置</span></button>
+      </nav>
+      <div class="rail-bottom"><button class="rail-item" type="button" data-label="帮助"><span class="ico" data-icon="help"></span><span class="rail-label">帮助中心</span></button></div>
+    </aside>
+
+    <nav class="subnav" aria-label="功能页签">
+      <button class="subtab active" type="button">用户管理</button>
+      <button class="subtab" type="button">组织管理</button>
+    </nav>
+
+    <main class="workspace" aria-label="内容工作区">
+      <nav class="breadcrumb" aria-label="页面路径"><span>管理后台</span><span class="ico" data-icon="chevronRight"></span><strong aria-current="page">用户管理</strong></nav>
+      <div class="page-header">
+        <h1>用户管理</h1>
+        <div class="page-actions"><button class="button" type="button" id="refreshButton"><span class="ico" data-icon="refresh"></span>刷新</button><button class="button primary" type="button" id="addButton"><span class="ico" data-icon="plus"></span>新增用户</button></div>
+      </div>
+
+      <form class="filters" id="filters">
+        <div class="field"><label for="name">用户名</label><input class="control" id="name" placeholder="请输入"></div>
+        <div class="field"><label for="email">邮箱</label><input class="control" id="email" placeholder="请输入"></div>
+        <div class="field"><label for="status">状态</label><div class="select-wrap"><select class="control" id="status"><option>全部</option><option>启用中</option><option>待激活</option><option>已停用</option></select><span class="ico" data-icon="chevronDown"></span></div></div>
+        <div class="field"><label for="role">用户角色</label><div class="select-wrap"><select class="control" id="role"><option>全部</option><option>管理员</option><option>普通用户</option></select><span class="ico" data-icon="chevronDown"></span></div></div>
+        <div class="filter-actions"><button class="button primary" type="submit"><span class="ico" data-icon="search"></span>查询</button><button class="button" type="button" id="resetButton"><span class="ico" data-icon="reset"></span>重置</button></div>
+      </form>
+
+      <section class="content-panel">
+        <div id="tableState">
+          <div class="table-wrap">
+            <table>
+              <thead><tr><th>序号</th><th>用户名</th><th>邮箱</th><th>角色</th><th>状态</th><th>操作</th></tr></thead>
+              <tbody>
+                <tr><td>1</td><td>Alex Chen</td><td>alex@example.com</td><td>管理员</td><td><span class="status">启用中</span></td><td><div class="row-actions"><button class="text-action" type="button" data-detail>详情</button><button class="text-action" type="button" data-edit>编辑</button><button class="text-action danger" type="button" data-delete>删除</button></div></td></tr>
+                <tr><td>2</td><td>Jamie Wang</td><td>jamie@example.com</td><td>普通用户</td><td><span class="status pending">待激活</span></td><td><div class="row-actions"><button class="text-action" type="button" data-detail>详情</button><button class="text-action" type="button" data-edit>编辑</button></div></td></tr>
+                <tr><td>3</td><td>Taylor Liu</td><td>taylor@example.com</td><td>普通用户</td><td><span class="status disabled">已停用</span></td><td><div class="row-actions"><button class="text-action" type="button" data-detail>详情</button><button class="text-action" type="button" data-edit>编辑</button></div></td></tr>
+                <tr><td>4</td><td>Morgan Lee</td><td>morgan@example.com</td><td>普通用户</td><td><span class="status">启用中</span></td><td><div class="row-actions"><button class="text-action" type="button" data-detail>详情</button><button class="text-action" type="button" data-edit>编辑</button></div></td></tr>
+              </tbody>
+            </table>
+          </div>
+          <div class="pagination"><span class="total">共 24 条</span><span class="grow"></span><button class="page-button" type="button" disabled>‹</button><button class="page-button active" type="button">1</button><button class="page-button" type="button">2</button><button class="page-button" type="button">3</button><button class="page-button" type="button">›</button><select class="page-button" aria-label="每页条数"><option>10 条/页</option><option>20 条/页</option></select></div>
+        </div>
+        <div class="state-panel" id="loadingState" hidden><div><div class="state-icon info"><span class="ico" data-icon="loader"></span></div><h2>加载中</h2><p>正在获取用户列表，请稍候。</p><div class="skeleton-list"><div class="skeleton"></div><div class="skeleton"></div><div class="skeleton"></div></div></div></div>
+        <div class="state-panel" id="emptyState" hidden><div><div class="state-icon"><span class="ico" data-icon="search"></span></div><h2>暂无用户</h2><p>当前还没有用户数据。</p><button class="button primary" type="button" id="emptyAdd">新增用户</button></div></div>
+        <div class="state-panel" id="errorState" hidden><div><div class="state-icon danger"><span class="ico" data-icon="alert"></span></div><h2>加载失败</h2><p>暂时无法获取用户列表，请重试。</p><button class="button primary" type="button" data-retry>重试</button></div></div>
+        <div class="state-panel" id="permissionState" hidden><div><div class="state-icon"><span class="ico" data-icon="lock"></span></div><h2>暂无访问权限</h2><p>当前账号没有查看此页面的权限。</p></div></div>
+      </section>
+    </main>
+  </div>
+
+  <div class="overlay" id="drawerOverlay" aria-hidden="true">
+    <aside class="drawer" role="dialog" aria-modal="true" aria-labelledby="drawerTitle">
+      <header class="drawer-head"><h2 id="drawerTitle">新增用户</h2><button class="icon-button" type="button" data-close-drawer aria-label="关闭"><span class="ico" data-icon="close"></span></button></header>
+      <div class="drawer-body" id="drawerBody">
+        <section class="drawer-section"><h3>基本信息</h3><div class="form-grid"><div class="field"><label for="drawerName">用户名</label><input class="control" id="drawerName" placeholder="请输入"></div><div class="field"><label for="drawerEmail">邮箱</label><input class="control" id="drawerEmail" placeholder="请输入"></div><div class="field span-2"><label for="drawerRole">用户角色</label><div class="select-wrap"><select class="control" id="drawerRole"><option>请选择</option><option>管理员</option><option>普通用户</option></select><span class="ico" data-icon="chevronDown"></span></div></div></div></section>
+        <section class="drawer-section"><h3>状态</h3><dl class="detail-list"><dt>账号状态</dt><dd><span class="status pending">待激活</span></dd><dt>默认语言</dt><dd>中文</dd></dl></section>
+      </div>
+      <footer class="drawer-foot"><button class="button" type="button" data-close-drawer>取消</button><button class="button primary" type="button" id="saveButton">保存</button></footer>
+    </aside>
+  </div>
+
+  <div class="modal-shell" id="modalShell" aria-hidden="true">
+    <section class="modal" role="dialog" aria-modal="true" aria-labelledby="modalTitle">
+      <header class="modal-head"><h2 id="modalTitle">删除用户</h2><button class="icon-button" type="button" data-close-modal aria-label="关闭"><span class="ico" data-icon="close"></span></button></header>
+      <div class="modal-body">确定删除用户 <strong id="modalUser">Alex Chen</strong> 吗？删除后无法恢复。</div>
+      <footer class="modal-foot"><button class="button" type="button" data-close-modal>取消</button><button class="button danger" type="button" id="confirmDelete">删除</button></footer>
+    </section>
+  </div>
+  <div class="toast" id="toast"><span class="ico" data-icon="check"></span><span>操作已完成</span></div>
+
+  <script>
+    const ICONS = {
+      menu: '<path d="M4 5h16M4 12h16M4 19h16"/>',
+      globe: '<circle cx="12" cy="12" r="9"/><path d="M3 12h18M12 3a14 14 0 0 1 0 18M12 3a14 14 0 0 0 0 18"/>',
+      chevronLeft: '<path d="m15 18-6-6 6-6"/>',
+      chevronRight: '<path d="m9 18 6-6-6-6"/>',
+      chevronDown: '<path d="m6 9 6 6 6-6"/>',
+      dashboard: '<rect x="3" y="3" width="7" height="9" rx="1"/><rect x="14" y="3" width="7" height="5" rx="1"/><rect x="14" y="12" width="7" height="9" rx="1"/><rect x="3" y="16" width="7" height="5" rx="1"/>',
+      user: '<path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"/><circle cx="12" cy="7" r="4"/>',
+      grid: '<rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/>',
+      shield: '<path d="M12 3 4 6v5c0 5 3.5 8 8 10 4.5-2 8-5 8-10V6z"/><path d="m9 12 2 2 4-4"/>',
+      settings: '<path d="M12 3v2M12 19v2M3 12h2M19 12h2M5.6 5.6 7 7M17 17l1.4 1.4M18.4 5.6 17 7M7 17l-1.4 1.4"/><circle cx="12" cy="12" r="3"/>',
+      help: '<circle cx="12" cy="12" r="9"/><path d="M9.7 9a2.4 2.4 0 1 1 3.8 1.9c-.9.6-1.5 1-1.5 2.1M12 16h.01"/>',
+      refresh: '<path d="M20 11a8 8 0 0 0-14.7-4L3 10"/><path d="M3 4v6h6"/><path d="M4 13a8 8 0 0 0 14.7 4L21 14"/><path d="M21 20v-6h-6"/>',
+      plus: '<path d="M5 12h14M12 5v14"/>',
+      search: '<circle cx="11" cy="11" r="7"/><path d="m20 20-4-4"/>',
+      reset: '<path d="M4 12a8 8 0 1 0 2.3-5.7L4 8.5"/><path d="M4 4v4.5h4.5"/>',
+      close: '<path d="m6 6 12 12M18 6 6 18"/>',
+      check: '<path d="m5 12 4 4L19 6"/>',
+      alert: '<path d="M12 4 3 20h18z"/><path d="M12 10v4M12 17h.01"/>',
+      lock: '<rect x="5" y="10" width="14" height="10" rx="2"/><path d="M8 10V7a4 4 0 0 1 8 0v3"/>',
+      loader: '<path d="M12 3v3M12 18v3M3 12h3M18 12h3M5.6 5.6l2.1 2.1M16.3 16.3l2.1 2.1M18.4 5.6l-2.1 2.1M7.7 16.3l-2.1 2.1"/>'
+    };
+    function renderIcons() {
+      document.querySelectorAll('[data-icon]').forEach(node => {
+        const body = ICONS[node.dataset.icon] || '';
+        node.innerHTML = '<svg viewBox="0 0 24 24" aria-hidden="true">' + body + '</svg>';
+      });
+    }
+    renderIcons();
+
+    const rail = document.getElementById('rail');
+    const drawerOverlay = document.getElementById('drawerOverlay');
+    const modalShell = document.getElementById('modalShell');
+    const toast = document.getElementById('toast');
+    const states = ['tableState', 'loadingState', 'emptyState', 'errorState', 'permissionState'];
+    function setState(name) {
+      states.forEach(id => { document.getElementById(id).hidden = id !== name; });
+      document.querySelectorAll('[data-state]').forEach(button => button.setAttribute('aria-pressed', String(button.dataset.state === name.replace('State', ''))));
+    }
+    function openDrawer(title = '新增用户') {
+      document.getElementById('drawerTitle').textContent = title;
+      drawerOverlay.classList.add('open');
+      drawerOverlay.setAttribute('aria-hidden', 'false');
+    }
+    function closeDrawer() {
+      drawerOverlay.classList.remove('open');
+      drawerOverlay.setAttribute('aria-hidden', 'true');
+    }
+    function openModal(name = 'Alex Chen') {
+      document.getElementById('modalUser').textContent = name;
+      modalShell.classList.add('open');
+      modalShell.setAttribute('aria-hidden', 'false');
+    }
+    function closeModal() {
+      modalShell.classList.remove('open');
+      modalShell.setAttribute('aria-hidden', 'true');
+    }
+    function showToast() {
+      toast.classList.add('show');
+      window.clearTimeout(showToast.timer);
+      showToast.timer = window.setTimeout(() => toast.classList.remove('show'), 1800);
+    }
+
+    document.getElementById('railToggle').addEventListener('click', () => rail.classList.toggle('collapsed'));
+    document.querySelectorAll('[data-state]').forEach(button => button.addEventListener('click', () => setState(button.dataset.state === 'default' ? 'tableState' : button.dataset.state + 'State')));
+    document.getElementById('addButton').addEventListener('click', () => openDrawer());
+    document.getElementById('emptyAdd').addEventListener('click', () => openDrawer());
+    document.querySelectorAll('[data-detail]').forEach(button => button.addEventListener('click', () => openDrawer('用户详情')));
+    document.querySelectorAll('[data-edit]').forEach(button => button.addEventListener('click', () => openDrawer('编辑用户')));
+    document.querySelectorAll('[data-delete]').forEach(button => button.addEventListener('click', () => openModal()));
+    document.querySelectorAll('[data-close-drawer]').forEach(button => button.addEventListener('click', closeDrawer));
+    document.querySelectorAll('[data-close-modal]').forEach(button => button.addEventListener('click', closeModal));
+    drawerOverlay.addEventListener('click', event => { if (event.target === drawerOverlay) closeDrawer(); });
+    modalShell.addEventListener('click', event => { if (event.target === modalShell) closeModal(); });
+    document.getElementById('saveButton').addEventListener('click', () => { closeDrawer(); showToast(); });
+    document.getElementById('confirmDelete').addEventListener('click', () => { closeModal(); showToast(); });
+    document.getElementById('refreshButton').addEventListener('click', () => { setState('loadingState'); window.setTimeout(() => setState('tableState'), 700); });
+    document.getElementById('resetButton').addEventListener('click', () => { document.getElementById('filters').reset(); setState('tableState'); });
+    document.getElementById('filters').addEventListener('submit', event => { event.preventDefault(); setState('tableState'); showToast(); });
+    document.querySelectorAll('[data-retry]').forEach(button => button.addEventListener('click', () => setState('tableState')));
+    document.addEventListener('keydown', event => { if (event.key === 'Escape') { closeDrawer(); closeModal(); } });
+  </script>
+</body>
+</html>

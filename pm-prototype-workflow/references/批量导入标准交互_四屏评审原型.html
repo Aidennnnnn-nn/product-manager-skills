@@ -1,0 +1,145 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>批量导入标准交互｜静态流程评审原型</title>
+<style>
+  :root {font-family:Poppins,"PingFang SC","Microsoft YaHei",sans-serif;color:#090e1d;background:#eff0f0;font-size:14px}
+  * {box-sizing:border-box} body {margin:0;min-width:2477px} .board{position:relative;width:2477px;height:1057px;margin:0 auto;background:#eff0f0}
+  .board-title{position:absolute;left:54px;top:48px;margin:0;color:#d124ee;font-weight:500;font-size:22px;line-height:28px}
+  .screen-label{position:absolute;top:84px;color:#79808b;font-size:12px}.screen-label.one{left:36px}.screen-label.two{left:839px}.screen-label.three{left:1600px}
+  .panel{position:absolute;top:111px;width:740px;background:#fff;border-radius:10px;box-shadow:0 7px 23px rgba(20,24,33,.06);overflow:hidden}
+  .initial{left:36px;height:411px}.success{left:839px;height:890px}.failure{left:1600px;height:890px}
+  .panel-head{height:71px;display:flex;align-items:flex-start;justify-content:space-between;padding:21px 20px 0}
+  .panel-head h2{font-size:17px;line-height:24px;font-weight:600;margin:0}.close{font-size:22px;line-height:22px;color:#090e1d}
+  .quick{margin:11px 20px 0}.quick h3{margin:0 0 10px;font-size:14px;line-height:19px;font-weight:650;display:flex;align-items:center;gap:9px}
+  .quick-icon{position:relative;width:18px;height:17px;border:1.8px solid #1d2534;border-radius:3px;display:inline-block}
+  .quick-icon:before{content:"";position:absolute;width:7px;height:2px;background:#ff5656;left:3px;top:4px}.quick-icon:after{content:"";position:absolute;width:5px;height:2px;background:#ff5656;left:3px;top:8px}
+  .quick p{margin:0;color:#8d929c;font-size:12px;line-height:19px}.template{position:absolute;top:189px;right:30px;min-width:130px;height:36px;border:1px solid #e1e3e6;border-radius:8px;display:flex;align-items:center;justify-content:center;gap:8px;font-size:13px;font-weight:500;background:#fff}
+  .icon-download{width:16px;height:16px}.upload-box,.file-box{position:absolute;left:20px;top:241px;height:148px;background:#f9f9f9;border-radius:12px;display:flex;align-items:center}
+  .initial .upload-box{width:690px}.upload-box{gap:32px;padding:0 21px}.upload-symbol{width:140px;height:105px;background:#fff;border-radius:12px;display:grid;place-items:center;flex:none}.upload-text{font-size:14px;color:#979ca6}
+  .paper{width:36px;height:44px;position:relative;border:4px solid #ffccd0;border-radius:6px;background:#fff2f2}.paper:before,.paper:after{content:"";position:absolute;left:5px;height:4px;width:20px;border-radius:4px;background:#fda0a0}.paper:before{top:10px}.paper:after{top:19px;box-shadow:0 9px 0 #fda0a0}
+  .loading-caption{position:absolute;left:72px;top:640px;color:#d124ee;font-size:16px}.upload-loading{position:absolute;left:56px;top:680px;width:690px;height:148px;border-radius:12px;background:#f9f9f9;display:flex;align-items:center;padding:0 21px;gap:32px}.upload-loading .upload-symbol{opacity:.55}.upload-loading .loading-indicator{text-align:center;color:#a7abb2;font-size:12px}.spinner{width:30px;height:30px;border:3px solid #f7d8db;border-top-color:#d95867;border-radius:50%;margin:0 auto 7px}.upload-loading .upload-text{opacity:.55}
+  .file-box{width:700px;padding:0 21px;gap:20px}.file-symbol{width:140px;height:105px;border-radius:12px;background:#fff;display:grid;place-items:center;flex:none}.sheet-icon{width:36px;height:43px;border-radius:4px;background:#e8f7f2;position:relative;display:grid;place-items:start;color:#26b98b}.sheet-icon:before{content:"X";position:absolute;top:9px;left:0;background:#26d49b;color:#fff;font-size:16px;line-height:17px;font-weight:700;width:17px;text-align:center}.sheet-icon:after{content:"";position:absolute;left:11px;bottom:7px;width:20px;height:2px;border-radius:2px;background:#9dd5c7;box-shadow:0 -6px 0 #9dd5c7,0 -12px 0 #9dd5c7}
+  .file-info strong{font-size:14px;font-weight:600}.metrics{display:flex;gap:23px;margin-top:12px;align-items:center;font-size:12px;color:#394152}.metrics b{font-weight:600}.metrics .good:before{content:"✓";display:inline-grid;place-items:center;width:15px;height:15px;border-radius:50%;background:#26d49b;color:white;margin-right:5px}.metrics .bad:before{content:"!";display:inline-grid;place-items:center;width:15px;height:15px;border-radius:4px;background:#ff626f;color:white;margin-right:5px}
+  .results{position:absolute;left:20px;top:405px;width:700px;height:412px;border:1px solid #e4e6e9;border-radius:10px;overflow:hidden}.tabs{height:44px;display:flex;align-items:stretch;gap:18px;padding:0 19px}.tab{position:relative;display:flex;align-items:center;gap:7px;padding:0 10px;color:#89909a;font-size:13px}.tab.active{color:#ff4350;font-weight:600}.tab.active:after{content:"";position:absolute;left:15px;right:15px;bottom:0;height:3px;border-radius:3px;background:#ff4350}.tick{font-weight:800;color:#26d49b}.alert{font-weight:800;color:#ff5662}
+  table{width:calc(100% - 40px);margin:0 20px;table-layout:fixed;border-collapse:collapse;font-size:13px}thead{background:#f5f5f5}th{height:41px;text-align:left;font-weight:400;color:#a4a9b0}td{height:48px;border-bottom:1px solid #e6e8ea;color:#303746;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}th:nth-child(1),td:nth-child(1){width:14%;padding-left:30px}th:nth-child(2),td:nth-child(2){width:16%}th:nth-child(3),td:nth-child(3){width:31%}.failure th:nth-child(3),.failure td:nth-child(3){width:28%}.reason{color:#ff4855}
+  .pager{height:54px;display:flex;align-items:center;justify-content:flex-end;gap:8px;padding:0 19px;font-size:12px;color:#334057}.pager .total{margin-right:12px}.pager .total b{color:#ff4552}.page{border:1px solid #e2e4e7;border-radius:6px;min-width:27px;height:27px;display:grid;place-items:center}.page.active{border-color:#ff4652;color:#ff4652}.per-page{border:1px solid #e2e4e7;border-radius:6px;padding:6px 9px;margin-left:7px}.result-action{height:48px;background:#f7f7f8;display:flex;align-items:center;justify-content:flex-end;padding:0 20px}.confirm{height:36px;padding:0 17px;border-radius:8px;background:#090e1d;color:white;display:flex;align-items:center;font-size:13px}.export{display:flex;align-items:center;gap:7px;font-size:12px;color:#202938}
+  .reupload{position:absolute;right:21px;bottom:20px;height:36px;padding:0 20px;border:1px solid #e2e4e7;border-radius:8px;display:flex;align-items:center;font-size:13px;color:#242b37;background:#fff}
+  .next-note{position:absolute;left:1050px;top:927px;color:#d124ee;font-size:15px}.review-foot{position:absolute;left:54px;bottom:18px;color:#7e858f;font-size:12px}
+
+  /* 静态评审板：沿用已确认 SVG 的弹窗内部元素，重排真实流转。 */
+  body{min-width:2240px}
+  .board{width:2240px;height:auto;min-height:0;padding:44px 0 68px;background:#eff0f0}
+  .board-title{position:static;margin:0 0 28px 40px;font-size:23px}
+  .review-row{display:flex;justify-content:center;align-items:stretch;gap:24px;width:2240px}
+  .review-row.pair{justify-content:space-between;padding:0 24px}
+  .scene{width:1080px;border:1px solid #dce0e5;border-radius:14px;background:#fff;overflow:hidden;box-shadow:0 5px 18px rgba(20,24,33,.06)}
+  .scene-head{height:82px;padding:14px 24px;background:#f8f9fa;border-bottom:1px solid #dce0e5}
+  .scene-head .scene-id{font-size:12px;color:#c23643;font-weight:700}
+  .scene-head h2{font-size:17px;font-weight:650;display:inline;margin:0 0 0 11px}
+  .scene-head p{font-size:12px;color:#6d7683;margin:7px 0 0;line-height:18px}
+  .scene-body{padding:24px 0;background:#f7f8f9;display:flex;justify-content:center;align-items:flex-start}
+  .scene .panel{position:relative;top:auto;left:auto;margin:0;width:740px}
+  .scene .initial{height:411px}.scene .success,.scene .failure{height:890px}
+  .scene .upload-box{left:20px;width:690px}
+  .scene .upload-loading{position:absolute;left:20px;top:241px;width:690px;height:148px}
+  .scene .progress .upload-box{display:none}
+  .flow{position:relative;width:2240px;height:160px}
+  .flow.wide{height:190px}
+  .flow svg{display:block;position:absolute;inset:0;width:2240px;height:100%;overflow:visible}
+  .flow path{fill:none;stroke:#a75a64;stroke-width:2}
+  .flow circle,.flow polygon{fill:#a75a64}
+  .flow-note{position:absolute;left:50%;top:62px;transform:translateX(-50%);background:#fff;border:1px solid #e3d6d8;border-radius:8px;padding:7px 13px;color:#65545a;font-size:12px;white-space:nowrap}
+  .flow.wide .flow-note{left:860px;top:76px}
+  .group-label{position:absolute;left:50%;bottom:12px;transform:translateX(-50%);border-radius:20px;background:#e5e8ed;padding:6px 15px;color:#667080;font-size:12px;white-space:nowrap}
+  .scene-after{min-height:55px;display:flex;align-items:center;justify-content:flex-end;padding:0 24px;color:#6d7683;font-size:12px;background:#fff}
+  .review-end{width:2160px;margin:24px auto 0;color:#6d7683;font-size:13px;line-height:1.8}
+  .review-end strong{color:#344054}
+
+  /* 评审板只包一层屏信息；弹窗本体沿用已确认的 SVG 结构。 */
+  body{min-width:2240px}
+  .board{position:relative;width:2240px;height:auto;min-height:0;margin:0 auto;padding:36px 0 64px;background:#eff0f0}
+  .board-title{position:static;margin:0 0 26px 315px;font-size:24px;line-height:32px;color:#172032;font-weight:650}
+  .review-row{width:2240px;display:grid;grid-template-columns:740px 740px;gap:130px;justify-content:center;align-items:start}
+  .scene{width:740px;background:#fff;border:1px solid #d9dee4;border-radius:12px;overflow:hidden;box-shadow:0 6px 18px rgba(18,27,43,.08)}
+  .scene-head{height:76px;padding:12px 20px;background:#f6f7f9;border-bottom:1px solid #d9dee4}
+  .scene-head .scene-id{font-size:12px;color:#c42f40;font-weight:700}
+  .scene-head h2{display:inline;margin:0 0 0 10px;font-size:17px;font-weight:650;color:#1f2937}
+  .scene-head p{margin:7px 0 0;color:#667080;font-size:12px;line-height:17px}
+  .scene-body{padding:0;background:#fff;display:block}
+  .scene .panel{position:relative;left:auto;top:auto;width:738px;margin:0;border-radius:0;box-shadow:none}
+  .scene .panel.initial{height:411px}
+  .scene .panel.success,.scene .panel.failure{height:890px}
+  .scene .panel .upload-box{left:20px;width:690px}
+  .scene .panel.progress .upload-box{display:none}
+  .scene .panel.progress .upload-loading{position:absolute;left:20px;top:241px;width:690px;height:148px}
+  .sequence-label,.tabs-label{width:max-content;margin:0 auto 12px;padding:6px 15px;border-radius:99px;background:#e3e7eb;color:#5f6977;font-size:12px}
+  .sequence-arrow{position:absolute;left:1055px;top:330px;width:130px;text-align:center;color:#9f4a57}
+  .sequence-arrow .shaft{position:relative;height:2px;background:#a95560;margin:16px 0 0}
+  .sequence-arrow .shaft:before{content:"";position:absolute;left:-5px;top:-4px;width:10px;height:10px;border-radius:50%;background:#a95560}
+  .sequence-arrow .shaft:after{content:"";position:absolute;right:-1px;top:-7px;border-top:8px solid transparent;border-bottom:8px solid transparent;border-left:15px solid #a95560}
+  .sequence-arrow .arrow-note{position:absolute;left:50%;top:-48px;transform:translateX(-50%);width:160px;padding:5px 6px;background:#fff;border:1px solid #ead6da;border-radius:6px;font-size:11px;line-height:16px}
+  .flow{position:relative;width:2240px;height:220px}
+  .flow svg{display:block;position:absolute;left:0;top:0;width:2240px;height:220px;overflow:visible}
+  .flow path{fill:none;stroke:#a95560;stroke-width:2}
+  .flow circle,.flow polygon{fill:#a95560}
+  .flow-note{position:absolute;left:1100px;top:70px;transform:translateX(-50%);padding:7px 12px;background:#fff;border:1px solid #ead6da;border-radius:7px;font-size:12px;color:#66545a;white-space:nowrap}
+  .tabs-label{position:absolute;left:50%;top:172px;transform:translateX(-50%);margin:0}
+  .result-row{position:relative}
+  .same-tabs{position:absolute;left:calc(50% - 26px);top:450px;width:52px;text-align:center;color:#9f4a57;font-size:22px;font-weight:600}
+  .scene-after{padding:12px 18px;min-height:48px;border-top:1px solid #e5e8ec;background:#fff;text-align:right;color:#667080;font-size:12px}
+  .review-end{width:1610px;margin:22px auto 0;color:#667080;font-size:12px;line-height:1.7}
+  .review-end strong{color:#344054}
+</style>
+</head>
+<body>
+<main class="board">
+  <h1 class="board-title">批量导入 · 静态流程评审原型</h1>
+  <div class="sequence-label">顺序 · 选择文件 → 上传与解析中</div>
+  <div class="review-row">
+    <article class="scene" id="scene-1a"><header class="scene-head"><span class="scene-id">屏 1a</span><h2>初始上传</h2><p>入口：业务页面「批量导入」；查看说明、下载模板并选择文件。</p></header><div class="scene-body"><section class="panel initial" aria-label="初始上传状态">
+    <header class="panel-head"><h2>批量导入</h2><span class="close" aria-label="关闭">×</span></header>
+    <div class="quick"><h3><span class="quick-icon"></span>操作说明</h3><p>1. 请先下载模板，并按模板要求填写数据。</p><p>2. 上传后可查看成功与失败记录。</p><p>3. 确认导入后进入当前业务的下一步。</p></div>
+    <div class="template"><svg class="icon-download" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1v9m-3-3 3 3 3-3M2 13h12" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>下载模板</div>
+    <div class="upload-box"><div class="upload-symbol"><div class="paper"></div></div><span class="upload-text">点击选择或拖拽文件到此处上传</span></div>
+  </section></div></article>
+    <article class="scene" id="scene-1b"><header class="scene-head"><span class="scene-id">屏 1b</span><h2>上传与解析中</h2><p>入口：选择文件后；上传区原位 Loading，禁止重复点击或拖入。</p></header><div class="scene-body"><section class="panel initial progress" aria-label="上传中状态">
+    <header class="panel-head"><h2>批量导入</h2><span class="close" aria-label="关闭">×</span></header>
+    <div class="quick"><h3><span class="quick-icon"></span>操作说明</h3><p>1. 请先下载模板，并按模板要求填写数据。</p><p>2. 上传后可查看成功与失败记录。</p><p>3. 确认导入后进入当前业务的下一步。</p></div>
+    <div class="template" aria-label="上传中下载模板保持可见"><svg class="icon-download" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1v9m-3-3 3 3 3-3M2 13h12" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>下载模板</div>
+    <div class="upload-loading" aria-label="上传中组件"><div class="upload-symbol"><div class="loading-indicator"><div class="spinner"></div>上传中</div></div><span class="upload-text">点击选择或拖拽文件到此处上传</span></div>
+  </section></div></article>
+  </div>
+  <div class="sequence-arrow" aria-label="点击或拖入文件后进入上传中"><span class="arrow-note">选择文件 · 上传开始 → 上传中</span><div class="shaft"></div></div>
+  <div class="flow" aria-label="解析完成后展示成功页签"><svg viewBox="0 0 2240 220" aria-hidden="true"><circle cx="1555" cy="0" r="5"/><path d="M1555 0 L1555 26 C1555 102 685 104 685 194 L685 220"/><polygon points="685,220 673,198 697,198"/></svg><span class="flow-note">上传解析完成 → 展示同批次结果（默认成功页签）</span><span class="tabs-label">同一批次的两个页签 · 成功 ⇄ 失败</span></div>
+  <div class="review-row result-row">
+    <article class="scene" id="scene-1c"><header class="scene-head"><span class="scene-id">屏 1c</span><h2>解析结果 · 成功页签</h2><p>入口：上传解析完成；确认导入后进入当前业务的下一步。</p></header><div class="scene-body"><section class="panel success" aria-label="解析成功页签">
+    <header class="panel-head"><h2>批量导入</h2><span class="close" aria-label="关闭">×</span></header>
+    <div class="quick"><h3><span class="quick-icon"></span>操作说明</h3><p>1. 请先下载模板，并按模板要求填写数据。</p><p>2. 上传后可查看成功与失败记录。</p><p>3. 确认导入后进入当前业务的下一步。</p></div>
+    <div class="template"><svg class="icon-download" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1v9m-3-3 3 3 3-3M2 13h12" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>下载模板</div>
+    <div class="file-box"><div class="file-symbol"><span class="sheet-icon"></span></div><div class="file-info"><strong>导入示例文件.xlsx</strong><div class="metrics"><span>总数 <b>20</b></span><span class="good">成功 <b>12</b></span><span class="bad">失败 <b>8</b></span></div></div></div>
+    <div class="results"><div class="tabs"><span class="tab active"><span class="tick">●</span>成功（12）</span><span class="tab"><span class="alert">▲</span>失败（8）</span></div>
+      <table aria-label="成功记录"><thead><tr><th>序号</th><th>行号</th><th>业务标识</th><th>记录摘要</th></tr></thead><tbody><tr><td>1</td><td>2</td><td>ITEM-001</td><td>示例记录一</td></tr><tr><td>2</td><td>3</td><td>ITEM-002</td><td>示例记录二</td></tr><tr><td>3</td><td>4</td><td>ITEM-003</td><td>示例记录三</td></tr><tr><td>4</td><td>5</td><td>ITEM-004</td><td>示例记录四</td></tr></tbody></table>
+      <div class="pager"><span class="total">共 <b>12</b> 条</span><span class="page">‹</span><span class="page active">1</span><span class="page">2</span><span class="page">3</span><span class="page">›</span><span class="per-page">4 条/页 ▾</span></div>
+      <div class="result-action"><span class="confirm">确认导入</span></div>
+    </div><div class="reupload">重新上传</div>
+  </section></div><div class="scene-after">↩ 重新上传：返回选择文件，清除当前结果</div></article>
+    <article class="scene" id="scene-1d"><header class="scene-head"><span class="scene-id">屏 1d</span><h2>解析结果 · 失败页签</h2><p>入口：同批次切换失败页签；查看原因并导出失败记录。</p></header><div class="scene-body"><section class="panel failure" aria-label="解析失败页签">
+    <header class="panel-head"><h2>批量导入</h2><span class="close" aria-label="关闭">×</span></header>
+    <div class="quick"><h3><span class="quick-icon"></span>操作说明</h3><p>1. 请先下载模板，并按模板要求填写数据。</p><p>2. 上传后可查看成功与失败记录。</p><p>3. 确认导入后进入当前业务的下一步。</p></div>
+    <div class="template"><svg class="icon-download" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1v9m-3-3 3 3 3-3M2 13h12" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>下载模板</div>
+    <div class="file-box"><div class="file-symbol"><span class="sheet-icon"></span></div><div class="file-info"><strong>导入示例文件.xlsx</strong><div class="metrics"><span>总数 <b>20</b></span><span class="good">成功 <b>12</b></span><span class="bad">失败 <b>8</b></span></div></div></div>
+    <div class="results"><div class="tabs"><span class="tab"><span class="tick">●</span>成功（12）</span><span class="tab active"><span class="alert">▲</span>失败（8）</span></div>
+      <table aria-label="失败记录"><thead><tr><th>序号</th><th>行号</th><th>业务标识</th><th>失败原因</th></tr></thead><tbody><tr><td>1</td><td>6</td><td>ITEM-005</td><td class="reason">必填内容缺失</td></tr><tr><td>2</td><td>9</td><td>ITEM-008</td><td class="reason">记录格式不符合要求</td></tr><tr><td>3</td><td>12</td><td>ITEM-011</td><td class="reason">业务标识重复</td></tr><tr><td>4</td><td>16</td><td>ITEM-015</td><td class="reason">内容无法解析</td></tr></tbody></table>
+      <div class="pager"><span class="total">共 <b>8</b> 条</span><span class="page">‹</span><span class="page active">1</span><span class="page">2</span><span class="page">›</span><span class="per-page">4 条/页 ▾</span></div>
+      <div class="result-action"><span class="export"><svg class="icon-download" viewBox="0 0 16 16" aria-hidden="true"><path d="M8 1v9m-3-3 3 3 3-3M2 13h12" fill="none" stroke="currentColor" stroke-width="1.7"/></svg>导出失败记录</span></div>
+    </div><div class="reupload">重新上传</div>
+  </section></div><div class="scene-after">↩ 重新上传：返回选择文件，清除当前结果</div></article>
+    <div class="same-tabs" aria-hidden="true">⇄</div>
+  </div>
+  <p class="review-end"><strong>评审边界：</strong>成功与失败是同一批次的页签视图，没有先后流转；确认导入后进入对应业务下一步，本稿不补画未确认页面。示例总数 20＝成功 12＋失败 8。</p>
+</main>
+</body>
+</html>
