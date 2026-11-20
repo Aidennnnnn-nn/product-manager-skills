@@ -1,0 +1,36 @@
+{
+  "profile": "personal",
+  "version": "V1.0",
+  "source": "references/个人风格原型模板.html",
+  "rules": {
+    "unknownComponent": "error",
+    "unknownVariant": "error",
+    "unregisteredIcon": "error",
+    "externalResource": "error"
+  },
+  "components": {
+    "scene-card": {"selector": ".scene", "variants": ["default"]},
+    "app-shell": {"selector": ".app", "variants": ["default"]},
+    "sidebar": {"selector": ".sidebar", "variants": ["default"]},
+    "nav-item": {"selector": ".nav-item", "variants": ["default", "active", "disabled"]},
+    "workspace": {"selector": ".workspace", "variants": ["default"]},
+    "workspace-header": {"selector": ".workspace-header", "variants": ["default"]},
+    "page-body": {"selector": ".page-body", "variants": ["default"]},
+    "page-title": {"selector": ".page-title", "variants": ["default"]},
+    "button": {"selector": "button", "variants": ["default", "primary", "danger", "icon", "text", "loading", "disabled", "hover", "focus", "pressed", "active"]},
+    "field": {"selector": ".field", "variants": ["default", "error", "readonly", "disabled"]},
+    "control": {"selector": ".control", "variants": ["input", "select", "textarea", "error", "readonly", "disabled", "focus"]},
+    "filters": {"selector": ".filters", "variants": ["default"]},
+    "panel": {"selector": ".panel", "variants": ["default", "empty", "loading", "error"]},
+    "table": {"selector": "table", "variants": ["default", "empty", "loading", "error"]},
+    "pagination": {"selector": ".pagination", "variants": ["default"]},
+    "tabs": {"selector": ".tabs", "variants": ["default"]},
+    "tab": {"selector": ".tab", "variants": ["default", "active", "disabled"]},
+    "switch": {"selector": ".switch", "variants": ["on", "off", "disabled"]},
+    "choice": {"selector": "input", "variants": ["checkbox", "radio", "disabled"]},
+    "notice": {"selector": ".notice", "variants": ["success", "failure", "warning", "loading"]},
+    "confirmation": {"selector": ".confirmation", "variants": ["default", "loading"]},
+    "status-label": {"selector": ".state-label", "variants": ["default", "paused", "error", "loading"]},
+    "flow": {"selector": ".flow", "variants": ["default"]}
+  }
+}

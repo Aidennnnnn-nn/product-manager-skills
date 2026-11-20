@@ -1,0 +1,101 @@
+{
+  "profile": "personal",
+  "name": "个人深灰科技风格",
+  "basis": "用户确认的机器人软件工作台参考预览；实现参数为归纳值，非 Figma 节点实测值。",
+  "css": {
+    "--bg": "#202125",
+    "--surface": "#2B2D31",
+    "--surface-raised": "#34363A",
+    "--surface-sunken": "#25262A",
+    "--sidebar-bg": "#1B1C20",
+    "--border": "#41444A",
+    "--border-strong": "#666B74",
+    "--ink": "#F3F4F6",
+    "--muted": "#B2B6BF",
+    "--subtle": "#969CA7",
+    "--brand": "#B7F35A",
+    "--brand-hover": "#C7FF72",
+    "--brand-soft": "#35452B",
+    "--on-brand": "#17200F",
+    "--accent-blue": "#9DB8FF",
+    "--accent-purple": "#C4ACF6",
+    "--danger": "#FF9D9D",
+    "--warning": "#F1CC7C",
+    "--focus": "#C7FF72",
+    "--sidebar": "88px",
+    "--button": "36px",
+    "--control": "40px",
+    "--radius-control": "10px",
+    "--radius-panel": "16px",
+    "--space-1": "4px",
+    "--space-2": "8px",
+    "--space-3": "12px",
+    "--space-4": "16px",
+    "--space-6": "24px",
+    "--space-8": "32px",
+    "--font": "-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', sans-serif"
+  },
+  "checks": [
+    {
+      "selector": ".app:not([data-state-sample])",
+      "property": "backgroundColor",
+      "value": "#202125"
+    },
+    {
+      "selector": ".sidebar:not([data-state-sample])",
+      "property": "width",
+      "value": "88px"
+    },
+    {
+      "selector": ".sidebar:not([data-state-sample])",
+      "property": "backgroundColor",
+      "value": "#1B1C20"
+    },
+    {
+      "selector": ".button.primary:not([data-state-sample])",
+      "property": "backgroundColor",
+      "value": "#B7F35A"
+    },
+    {
+      "selector": ".button.primary:not([data-state-sample])",
+      "property": "color",
+      "value": "#17200F"
+    },
+    {
+      "selector": ".button.primary:not([data-state-sample])",
+      "property": "borderRadius",
+      "value": "10px"
+    },
+    {
+      "selector": ".control:not([data-state-sample])",
+      "property": "height",
+      "value": "40px"
+    },
+    {
+      "selector": ".control:not([data-state-sample])",
+      "property": "borderRadius",
+      "value": "10px"
+    },
+    {
+      "selector": ".control:not([data-state-sample])",
+      "property": "backgroundColor",
+      "value": "#25262A"
+    },
+    {
+      "selector": ".nav-item.active:not([data-state-sample])",
+      "property": "backgroundColor",
+      "value": "#B7F35A"
+    },
+    {
+      "selector": ".nav-item.active:not([data-state-sample])",
+      "property": "color",
+      "value": "#17200F"
+    },
+    {
+      "selector": ".panel:not([data-state-sample])",
+      "property": "backgroundColor",
+      "value": "#2B2D31"
+    }
+  ],
+  "notes": "css 为视觉值唯一维护源，模板内联以离线使用。checks 仅检查当前页面存在的产品默认态组件；带 data-state-sample 的状态样例不参与锁定校验。禁止为通过校验增加业务组件。"
+}

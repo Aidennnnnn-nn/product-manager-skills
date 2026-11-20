@@ -1,0 +1,228 @@
+<!doctype html>
+<html lang="zh-CN" data-prototype-strict data-style-profile="personal">
+<head><meta charset="UTF-8"><meta name="viewport" content="width=device-width,initial-scale=1"><title>个人深灰科技风格原型参考</title><link rel="icon" href="data:,">
+<style>
+:root{
+--bg:#202125;
+--surface:#2B2D31;
+--surface-raised:#34363A;
+--surface-sunken:#25262A;
+--sidebar-bg:#1B1C20;
+--border:#41444A;
+--border-strong:#666B74;
+--ink:#F3F4F6;
+--muted:#B2B6BF;
+--subtle:#969CA7;
+--brand:#B7F35A;
+--brand-hover:#C7FF72;
+--brand-soft:#35452B;
+--on-brand:#17200F;
+--accent-blue:#9DB8FF;
+--accent-purple:#C4ACF6;
+--danger:#FF9D9D;
+--warning:#F1CC7C;
+--focus:#C7FF72;
+--sidebar:88px;
+--button:36px;
+--control:40px;
+--radius-control:10px;
+--radius-panel:16px;
+--space-1:4px;
+--space-2:8px;
+--space-3:12px;
+--space-4:16px;
+--space-6:24px;
+--space-8:32px;
+--font:-apple-system, BlinkMacSystemFont, 'PingFang SC', 'Helvetica Neue', 'Microsoft YaHei', sans-serif;
+}
+*{box-sizing:border-box;}
+body{margin:0;background:#F3F5F7;color:var(--ink);font:14px/1.6 var(--font);}
+button,input,select{font:inherit;color:inherit;}
+button{cursor:pointer;}
+button:disabled,input:disabled,select:disabled{cursor:not-allowed;}
+button:focus-visible,input:focus-visible,select:focus-visible{outline:2px solid var(--focus);outline-offset:2px;}
+.board{width:2240px;padding:40px 0 72px;margin:0 auto;}
+.board-head,.row{width:1442px;margin:0 auto;}
+.board-head{margin-bottom:24px;}
+.board-head p{font-size:12px;color:var(--muted);margin:0 0 8px;}
+.board-head h1{font-size:24px;line-height:32px;margin:0;font-weight:600;}
+.row+.row{margin-top:32px;}
+.scene{width:1442px;border:1px solid var(--border);border-radius:14px;overflow:hidden;background:var(--surface);}
+.scene-head{height:70px;padding:12px 20px;background:#F8F8F8;border-bottom:1px solid var(--border);}
+.scene-head h2{margin:0 0 4px;font-size:14px;line-height:20px;font-weight:600;}
+.scene-head p{margin:0;font-size:12px;line-height:18px;color:var(--muted);}
+.app{width:1440px;height:900px;display:flex;background:var(--bg);overflow:hidden;}
+.sidebar{width:var(--sidebar);min-width:var(--sidebar);background:var(--surface);border-right:1px solid var(--border);display:flex;flex-direction:column;}
+.brand-block{height:80px;padding:0 20px;display:flex;align-items:center;gap:12px;}
+.brand-mark{width:36px;height:36px;border-radius:8px;background:var(--brand-soft);color:var(--brand);display:grid;place-items:center;}
+.brand-mark .icon{width:20px;height:20px;}
+.brand-block strong{font-size:15px;font-weight:600;}
+.navigation{display:flex;flex-direction:column;gap:4px;padding:0 12px;}
+.nav-item{width:100%;height:40px;padding:0 12px;display:flex;align-items:center;gap:8px;border:0;border-radius:8px;background:transparent;text-align:left;color:var(--muted);}
+.nav-item.active{background:var(--brand-soft);color:var(--ink);font-weight:600;}
+.sidebar-bottom{padding:12px;border-top:1px solid var(--border);margin-top:auto;}
+.workspace{flex:1;min-width:0;display:flex;flex-direction:column;}
+.workspace-header{height:56px;min-height:56px;padding:0 24px;border-bottom:1px solid var(--border);background:var(--surface);display:flex;align-items:center;font-size:14px;font-weight:600;}
+.page-body{padding:24px;display:flex;flex-direction:column;gap:24px;}
+.page-title{display:flex;align-items:center;justify-content:space-between;gap:16px;}
+.page-title h1{font-size:20px;line-height:28px;margin:0;font-weight:600;}
+.actions,.filter-actions{display:flex;align-items:center;gap:8px;}
+.button{height:var(--button);padding:0 14px;display:inline-flex;align-items:center;justify-content:center;gap:8px;border:1px solid var(--border-strong);border-radius:var(--radius-control);background:var(--surface);white-space:nowrap;}
+.button.primary{background:var(--brand);border-color:var(--brand);color:var(--surface);}
+.button.primary:hover{background:var(--brand-hover);border-color:var(--brand-hover);}
+.button:disabled{background:var(--bg);border-color:var(--border);color:var(--subtle);}
+.button.danger{color:var(--danger);border-color:var(--danger);}
+.button.icon-button{width:36px;padding:0;}
+.icon{width:16px;height:16px;flex-shrink:0;display:block;}
+.filters{display:grid;grid-template-columns:repeat(3,1fr) auto;gap:16px;align-items:end;padding:24px;border:1px solid var(--border);border-radius:var(--radius-panel);background:var(--surface);}
+.field{min-width:0;display:flex;flex-direction:column;gap:8px;}
+.field label{font-size:12px;color:var(--muted);}
+.control{width:100%;height:var(--control);padding:0 12px;border:1px solid var(--border-strong);border-radius:var(--radius-control);background:var(--surface);}
+.control::placeholder{color:var(--subtle);}
+.select-wrap{position:relative;}
+.select-wrap select{appearance:none;padding-right:32px;}
+.select-wrap>.icon{position:absolute;top:12px;right:12px;color:var(--muted);pointer-events:none;}
+.filter-actions{height:40px;}
+.panel{border:1px solid var(--border);border-radius:var(--radius-panel);background:var(--surface);overflow:hidden;}
+table{width:100%;border-collapse:collapse;table-layout:fixed;}
+th{height:44px;padding:0 20px;text-align:left;font-weight:500;font-size:12px;color:var(--muted);background:var(--bg);}
+td{height:60px;padding:0 20px;border-top:1px solid var(--border);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.state-label{display:inline-flex;align-items:center;gap:6px;color:var(--brand);font-size:12px;}
+.state-label.paused{color:var(--muted);}
+.state-dot{width:6px;height:6px;border-radius:50%;background:currentColor;}
+.text-button{border:0;background:transparent;padding:0;color:var(--brand);font-size:13px;}
+.pagination{padding:16px 20px;border-top:1px solid var(--border);display:flex;align-items:center;gap:8px;font-size:12px;color:var(--muted);}
+.space{flex:1;}
+.page-button{width:30px;height:30px;border:1px solid var(--border);border-radius:8px;background:var(--surface);display:grid;place-items:center;}
+.page-button.active{border-color:var(--brand);background:var(--brand-soft);color:var(--brand);}
+.page-button:disabled{background:var(--bg);color:var(--subtle);}
+.specimens{width:1440px;padding:24px;background:var(--bg);display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+.specimen{background:var(--surface);border:1px solid var(--border);border-radius:12px;padding:24px;display:flex;flex-direction:column;gap:16px;}
+.specimen h3{font-size:16px;font-weight:600;margin:0;}
+.sample-label{font-size:12px;color:var(--muted);margin:0;}
+.switch-row,.choice-row{display:flex;align-items:center;gap:8px;}
+.switch{width:36px;height:20px;border:0;padding:2px;border-radius:12px;background:var(--brand);display:flex;justify-content:flex-end;}
+.switch span{width:16px;height:16px;border-radius:50%;background:var(--surface);}
+.choice-row input{width:16px;height:16px;margin:0;accent-color:var(--brand);}
+.tabs{display:flex;gap:24px;border-bottom:1px solid var(--border);}
+.tab{height:40px;padding:0;border:0;border-bottom:2px solid transparent;background:transparent;color:var(--muted);}
+.tab.active{border-bottom-color:var(--brand);color:var(--ink);}
+.notice{padding:12px 16px;display:flex;align-items:center;gap:8px;border:1px solid var(--border);border-radius:8px;background:var(--brand-soft);}
+.notice .icon{color:var(--brand);}
+.confirmation{border:1px solid var(--border);border-radius:12px;overflow:hidden;}
+.confirmation header{padding:16px;display:flex;justify-content:space-between;align-items:center;}
+.confirmation h4{font-size:14px;margin:0;}
+.confirmation p{margin:0;padding:0 16px 16px;}
+.confirmation footer{padding:12px 16px;display:flex;justify-content:flex-end;gap:8px;border-top:1px solid var(--border);background:var(--bg);}
+
+body{background:#ECEEF1}.board-head{color:#25282E}.board-head p,.scene-head p{color:#626976}.scene-head{color:#25282E;background:#F8F9FB;border-color:#DADDE3}.scene{border-color:#CDD1D8}.sidebar{background:var(--sidebar-bg);align-items:center;border-color:#34373E}.brand-block{height:92px;padding:0;justify-content:center}.brand-block strong{display:none}.brand-mark{width:40px;height:40px;border-radius:13px;background:var(--accent-blue);color:#182337}.navigation{padding:0;gap:12px;align-items:center}.nav-item{width:60px;height:64px;padding:6px 2px;flex-direction:column;justify-content:center;gap:5px;font-size:12px;border-radius:14px}.nav-item .icon{width:21px;height:21px}.nav-item.active{background:var(--brand);color:var(--on-brand);box-shadow:0 6px 18px #98DC3020}.sidebar-bottom{padding:16px 0;border:0;width:60px}.workspace-header{height:64px;min-height:64px;background:var(--bg);border-color:#34373E;color:var(--muted);font-size:13px;font-weight:500;justify-content:space-between}.header-tools{display:flex;align-items:center;gap:14px}.avatar{width:30px;height:30px;border-radius:10px;background:#303442;border:1px solid #6A7082;color:var(--accent-blue);display:grid;place-items:center;font-size:12px}.page-title h1{font-size:26px;line-height:34px;letter-spacing:-.5px}.eyebrow{margin:0 0 6px;color:var(--muted);font-size:12px;letter-spacing:1px}.button{font-size:13px;font-weight:500}.button.primary{color:var(--on-brand);box-shadow:0 4px 12px #0002}.button:disabled{background:var(--surface-sunken);color:var(--subtle);opacity:.55}.button.danger{border-color:#A36774}.control{background:var(--surface-sunken);color-scheme:dark;font-size:13px}.panel{box-shadow:0 8px 20px #00000016}.panel-head{padding:18px 20px;display:flex;align-items:center;justify-content:space-between;gap:12px}.panel-head h2{font-size:15px;font-weight:600;margin:0}.panel-head p{font-size:12px;color:var(--muted);margin:2px 0 0}th{background:var(--surface-sunken)}.specimen{border-radius:var(--radius-panel)}.switch span{background:var(--on-brand)}.switch.off{justify-content:flex-start;background:#555B65}.switch.off span{background:#E4E8EE}.notice{border-color:#5E7C3C}.notice.failure{background:#432E34;border-color:#A36774}.notice.failure .icon{color:var(--danger)}.confirmation{background:var(--surface);border-color:var(--border-strong)}.confirmation p{color:var(--muted)}.confirmation footer{background:var(--surface-sunken)}
+.dashboard{display:grid;grid-template-columns:1.55fr 1fr;gap:24px}.dashboard-main,.dashboard-aside{display:flex;flex-direction:column;gap:20px;min-width:0}.metrics{display:grid;grid-template-columns:repeat(3,1fr);gap:14px}.metric{padding:18px;border:1px solid var(--border);border-radius:var(--radius-panel);background:var(--surface)}.metric-top{color:var(--muted);font-size:12px}.metric-value{margin:10px 0 12px;font-size:30px;line-height:36px;font-weight:500;font-variant-numeric:tabular-nums}.metric-value small{font-size:12px;color:var(--muted);margin-left:5px}.meter{height:4px;border-radius:6px;background:#45494F;overflow:hidden}.meter span{display:block;height:100%;background:var(--brand);border-radius:6px}.metric-foot{font-size:11px;color:var(--muted);margin-top:9px}.activity-list{padding:0 20px 6px}.activity-item{height:67px;display:flex;align-items:center;gap:12px;border-top:1px solid var(--border)}.file-mark{width:34px;height:38px;border-radius:9px;display:grid;place-items:center;background:#363B48;color:var(--accent-blue)}.file-mark.purple{background:#3D354C;color:var(--accent-purple)}.file-mark.green{background:var(--brand-soft);color:var(--brand)}.activity-copy{flex:1}.activity-copy strong{font-weight:500;font-size:13px}.activity-copy p{font-size:12px;color:var(--muted);margin:2px 0 0}.tag{padding:3px 8px;border-radius:6px;background:#393D46;color:var(--muted);font-size:11px}.quick-grid{padding:0 20px 20px;display:grid;grid-template-columns:repeat(3,1fr);gap:12px}.quick-card{height:91px;padding:14px;text-align:left;border:1px solid #4B5059;border-radius:12px;background:var(--surface-raised);display:flex;flex-direction:column;align-items:flex-start;justify-content:space-between;font-size:12px;color:var(--ink)}.quick-card .icon{color:var(--accent-blue)}.quick-card:nth-child(2) .icon{color:var(--accent-purple)}.quick-card:nth-child(3) .icon{color:var(--brand)}.chart-body{padding:0 20px 18px}.chart-legend{display:flex;gap:12px;font-size:11px;color:var(--muted);margin-bottom:12px}.chart-legend span{display:inline-flex;gap:5px;align-items:center}.chart-legend i{width:6px;height:6px;border-radius:50%;background:var(--brand)}.chart-legend span+span i{background:var(--accent-blue)}.chart{width:100%;height:132px;display:block}.chart-grid line{stroke:#41454D;stroke-width:1}.chart-labels{display:flex;justify-content:space-between;font-size:10px;color:var(--subtle);padding:8px 0 0}.empty-body{padding:0 20px 20px;display:flex;flex-direction:column;align-items:center;text-align:center}.empty-body h3{font-size:15px;font-weight:500;margin:4px 0 6px}.empty-body p{color:var(--muted);font-size:12px;margin:0 0 14px}.orb-stage{height:123px;width:180px;position:relative;display:grid;place-items:center;perspective:500px}.orb-stage:after{content:'';position:absolute;width:98px;height:14px;bottom:7px;background:#0007;filter:blur(8px);border-radius:50%}.soft-object{width:66px;height:66px;border-radius:20px;transform:rotate(-18deg) rotateY(-22deg) rotateX(15deg);background:linear-gradient(138deg,#FFF 5%,#E3E9F1 36%,#A3B4C8 75%,#76899F);box-shadow:inset 3px 3px 9px #FFF8,inset -5px -5px 10px #3344594D,8px 11px 18px #0003;position:relative;z-index:1}.soft-object:after{content:'';width:32px;height:8px;border-radius:4px;position:absolute;left:17px;top:28px;background:#A0D957;box-shadow:0 2px 5px #1F34314D}
+/* 组件状态样例：带 data-state-sample 的节点只作样式核对，不参与产品默认态锁定校验 */
+.state-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px 12px}
+.state-stack{display:flex;flex-direction:column;gap:10px}
+.state-cell{display:flex;flex-direction:column;align-items:flex-start;gap:6px;min-width:0}
+.state-cell .sample-label{margin:0}
+.state-cell .control{width:100%}
+.button.primary.is-hover{background:var(--brand-hover);border-color:var(--brand-hover)}
+.button.primary.is-focus{outline:2px solid var(--focus);outline-offset:2px}
+.button.primary.is-press{box-shadow:none;transform:translateY(1px)}
+.button.is-loading{opacity:.7;cursor:progress}
+.state-cell .button.primary:disabled{background:var(--brand-soft);border-color:var(--border-strong);color:var(--muted);opacity:.9}
+.state-cell .button.primary.is-loading:disabled{background:var(--brand);border-color:var(--brand);color:var(--on-brand);opacity:.72}
+.control.is-focus{outline:2px solid var(--focus);outline-offset:2px}
+.control.is-error{border-color:var(--danger)}
+.control.is-readonly{color:var(--muted);border-style:dashed}
+.control:disabled{opacity:.55}
+.field-error{font-size:12px;line-height:18px;color:var(--danger)}
+.switch:disabled,.tab:disabled{opacity:.5;cursor:not-allowed}
+.notice.failure{border-color:var(--danger)}
+.notice.failure .icon{color:var(--danger)}
+</style></head>
+<body>
+<main class="board" aria-label="个人风格原型参考">
+ <header class="board-head"><p>通用参考 / 深灰科技 / 虚构排版样例</p><h1>个人风格静态原型参考</h1></header>
+<div class="row"><article class="scene" data-component="scene-card" data-variant="default" id="scene-1a"><header class="scene-head"><h2>1a · 工作概览</h2><p>入口：菜单；概览布局参考，全部数据为虚构样例。</p></header><div class="app" data-component="app-shell" data-variant="default" data-shell="personal-rail"><aside class="sidebar" data-component="sidebar" data-variant="default" aria-label="功能导航"><div class="brand-block"><span class="brand-mark"><svg aria-hidden="true" focusable="false" data-icon="grid" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg></span><strong>个人工作台</strong></div><nav class="navigation"><button class="nav-item active" data-component="nav-item" data-variant="active" type="button" aria-current="page"><svg aria-hidden="true" focusable="false" data-icon="home" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>概览</span></button><button class="nav-item" data-component="nav-item" data-variant="default" type="button"><svg aria-hidden="true" focusable="false" data-icon="list" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h.01"/><path d="M3 12h.01"/><path d="M3 19h.01"/><path d="M8 5h13"/><path d="M8 12h13"/><path d="M8 19h13"/></svg><span>条目</span></button></nav><div class="sidebar-bottom"><button class="nav-item" data-component="nav-item" data-variant="default" type="button"><svg aria-hidden="true" focusable="false" data-icon="settings" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"/><circle cx="12" cy="12" r="3"/></svg><span>设置</span></button></div></aside><section class="workspace" data-component="workspace" data-variant="default" aria-label="内容工作区"><header class="workspace-header" data-component="workspace-header" data-variant="default"><span>个人工作台 / 概览</span><div class="header-tools"><span class="state-label" data-component="status-label" data-variant="default"><span class="state-dot"></span>已同步</span><button class="button icon-button" data-component="button" data-variant="icon" type="button" aria-label="通知"><svg aria-hidden="true" focusable="false" data-icon="bell" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/></svg></button><span class="avatar" aria-label="示例用户">U</span></div></header><div class="page-body" data-component="page-body" data-variant="default"><div class="page-title" data-component="page-title" data-variant="default"><div><p class="eyebrow">个人空间</p><h1>工作概览</h1></div><button class="button primary" data-component="button" data-variant="primary" type="button"><svg aria-hidden="true" focusable="false" data-icon="plus" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>新建条目</button></div><div class="dashboard"><div class="dashboard-main"><div class="metrics"><section class="metric"><div class="metric-top">全部条目</div><div class="metric-value">128<small>条</small></div><div class="meter"><span style="width:73%"></span></div><div class="metric-foot">本周新增 12 条</div></section><section class="metric"><div class="metric-top">最近整理</div><div class="metric-value">24<small>条</small></div><div class="meter"><span style="width:48%"></span></div><div class="metric-foot">已归类 4 个主题</div></section><section class="metric"><div class="metric-top">存储空间</div><div class="metric-value">2.4<small>GB</small></div><div class="meter"><span style="width:32%"></span></div><div class="metric-foot">共 8 GB 可用空间</div></section></div><section class="panel" data-component="panel" data-variant="default"><header class="panel-head"><h2>最近访问</h2><span class="tag">最近 7 天</span></header><div class="activity-list"><div class="activity-item"><span class="file-mark "><svg aria-hidden="true" focusable="false" data-icon="file" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/><path d="M14 2v5a1 1 0 0 0 1 1h5"/></svg></span><div class="activity-copy"><strong>产品灵感与观察</strong><p>今天 14:30 · 个人空间</p></div><span class="tag">笔记</span></div><div class="activity-item"><span class="file-mark purple"><svg aria-hidden="true" focusable="false" data-icon="folder" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg></span><div class="activity-copy"><strong>本周阅读摘录</strong><p>今天 10:15 · 阅读资料</p></div><span class="tag">资料</span></div><div class="activity-item"><span class="file-mark green"><svg aria-hidden="true" focusable="false" data-icon="file" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M6 22a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h8a2.4 2.4 0 0 1 1.704.706l3.588 3.588A2.4 2.4 0 0 1 20 8v12a2 2 0 0 1-2 2z"/><path d="M14 2v5a1 1 0 0 0 1 1h5"/></svg></span><div class="activity-copy"><strong>工作方法整理</strong><p>昨天 18:42 · 个人空间</p></div><span class="tag">笔记</span></div><div class="activity-item"><span class="file-mark "><svg aria-hidden="true" focusable="false" data-icon="folder" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M20 20a2 2 0 0 0 2-2V8a2 2 0 0 0-2-2h-7.9a2 2 0 0 1-1.69-.9L9.6 3.9A2 2 0 0 0 7.93 3H4a2 2 0 0 0-2 2v13a2 2 0 0 0 2 2Z"/></svg></span><div class="activity-copy"><strong>设计参考收藏</strong><p>昨天 16:20 · 视觉素材</p></div><span class="tag">资料</span></div></div></section><section class="panel" data-component="panel" data-variant="default"><header class="panel-head"><h2>快捷操作</h2></header><div class="quick-grid"><button class="quick-card" data-component="button" data-variant="default" type="button"><svg aria-hidden="true" focusable="false" data-icon="plus" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg><span>新建条目</span></button><button class="quick-card" data-component="button" data-variant="default" type="button"><svg aria-hidden="true" focusable="false" data-icon="upload" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M12 3v12"/><path d="m17 8-5-5-5 5"/><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/></svg><span>导入资料</span></button><button class="quick-card" data-component="button" data-variant="default" type="button"><svg aria-hidden="true" focusable="false" data-icon="search" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m21 21-4.34-4.34"/><circle cx="11" cy="11" r="8"/></svg><span>搜索内容</span></button></div></section></div><div class="dashboard-aside"><section class="panel" data-component="panel" data-variant="default"><header class="panel-head"><div><h2>整理趋势</h2><p>过去一周的内容变化</p></div><span class="tag">本周</span></header><div class="chart-body"><div class="chart-legend"><span><i></i>新增</span><span><i></i>整理</span></div><svg class="chart" viewBox="0 0 400 132" role="img" aria-label="示例整理趋势，不代表真实统计"><g class="chart-grid"><line x1="0" y1="20" x2="400" y2="20"/><line x1="0" y1="60" x2="400" y2="60"/><line x1="0" y1="100" x2="400" y2="100"/></g><path d="M0 112L36 93L72 97L108 60L144 77L180 45L216 61L252 38L288 45L324 21L360 35L400 12" fill="none" stroke="#B7F35A" stroke-width="2"/><path d="M0 91L36 100L72 78L108 86L144 59L180 69L216 50L252 65L288 35L324 49L360 25L400 32" fill="none" stroke="#9DB8FF" stroke-width="2" opacity=".7"/></svg><div class="chart-labels"><span>周一</span><span>周二</span><span>周三</span><span>周四</span><span>周五</span><span>周六</span><span>周日</span></div></div></section><section class="panel" data-component="panel" data-variant="default"><header class="panel-head"><h2>收藏空间</h2><svg aria-hidden="true" focusable="false" data-icon="more" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="1"/><circle cx="19" cy="12" r="1"/><circle cx="5" cy="12" r="1"/></svg></header><div class="empty-body"><div class="orb-stage" aria-hidden="true"><div class="soft-object"></div></div><h3>留住值得回看的内容</h3><p>收藏重要条目，下次更快找到。</p><button class="button" data-component="button" data-variant="default" type="button"><svg aria-hidden="true" focusable="false" data-icon="plus" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>添加收藏</button></div></section></div></div></div></section></div></article></div>
+ <div class="row"><article class="scene" data-component="scene-card" data-variant="default" id="scene-2a">
+  <header class="scene-head"><h2>2a · 条目列表</h2><p>入口：菜单；默认列表。示例数据仅用于排版。</p></header>
+  <div class="app" data-component="app-shell" data-variant="default" data-shell="personal-rail">
+   <aside class="sidebar" data-component="sidebar" data-variant="default" aria-label="功能导航"><div class="brand-block"><span class="brand-mark"><svg aria-hidden="true" focusable="false" data-icon="grid" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect width="7" height="7" x="3" y="3" rx="1"/><rect width="7" height="7" x="14" y="3" rx="1"/><rect width="7" height="7" x="14" y="14" rx="1"/><rect width="7" height="7" x="3" y="14" rx="1"/></svg></span><strong>个人工作台</strong></div><nav class="navigation"><button class="nav-item" data-component="nav-item" data-variant="default" type="button"><svg aria-hidden="true" focusable="false" data-icon="home" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M15 21v-8a1 1 0 0 0-1-1h-4a1 1 0 0 0-1 1v8"/><path d="M3 10a2 2 0 0 1 .709-1.528l7-6a2 2 0 0 1 2.582 0l7 6A2 2 0 0 1 21 10v9a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2z"/></svg><span>概览</span></button><button class="nav-item active" data-component="nav-item" data-variant="active" type="button" aria-current="page"><svg aria-hidden="true" focusable="false" data-icon="list" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 5h.01"/><path d="M3 12h.01"/><path d="M3 19h.01"/><path d="M8 5h13"/><path d="M8 12h13"/><path d="M8 19h13"/></svg><span>条目</span></button></nav><div class="sidebar-bottom"><button class="nav-item" data-component="nav-item" data-variant="default" type="button"><svg aria-hidden="true" focusable="false" data-icon="settings" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M9.671 4.136a2.34 2.34 0 0 1 4.659 0 2.34 2.34 0 0 0 3.319 1.915 2.34 2.34 0 0 1 2.33 4.033 2.34 2.34 0 0 0 0 3.831 2.34 2.34 0 0 1-2.33 4.033 2.34 2.34 0 0 0-3.319 1.915 2.34 2.34 0 0 1-4.659 0 2.34 2.34 0 0 0-3.32-1.915 2.34 2.34 0 0 1-2.33-4.033 2.34 2.34 0 0 0 0-3.831A2.34 2.34 0 0 1 6.35 6.051a2.34 2.34 0 0 0 3.319-1.915"/><circle cx="12" cy="12" r="3"/></svg><span>设置</span></button></div></aside>
+   <section class="workspace" data-component="workspace" data-variant="default" aria-label="内容工作区"><header class="workspace-header" data-component="workspace-header" data-variant="default"><span>个人工作台 / 条目</span><div class="header-tools"><span class="state-label" data-component="status-label" data-variant="default"><span class="state-dot"></span>已同步</span><button class="button icon-button" data-component="button" data-variant="icon" type="button" aria-label="通知"><svg aria-hidden="true" focusable="false" data-icon="bell" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M10.268 21a2 2 0 0 0 3.464 0"/><path d="M3.262 15.326A1 1 0 0 0 4 17h16a1 1 0 0 0 .74-1.673C19.41 13.956 18 12.499 18 8A6 6 0 0 0 6 8c0 4.499-1.411 5.956-2.738 7.326"/></svg></button><span class="avatar" aria-label="示例用户">U</span></div></header><div class="page-body" data-component="page-body" data-variant="default">
+    <div class="page-title" data-component="page-title" data-variant="default"><h1>条目管理</h1><div class="actions"><button class="button" data-component="button" data-variant="default" type="button"><svg aria-hidden="true" focusable="false" data-icon="refresh" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg>刷新</button><button class="button primary" data-component="button" data-variant="primary" type="button"><svg aria-hidden="true" focusable="false" data-icon="plus" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M5 12h14"/><path d="M12 5v14"/></svg>新增条目</button></div></div>
+    <div class="filters" data-component="filters" data-variant="default"><div class="field" data-component="field" data-variant="default"><label for="entry-name">名称</label><input class="control" data-component="control" data-variant="input" id="entry-name" placeholder="请输入" readonly></div><div class="field" data-component="field" data-variant="default"><label for="entry-category">分类</label><div class="select-wrap"><select class="control" data-component="control" data-variant="select" id="entry-category"><option>全部</option><option>分类一</option><option>分类二</option></select><svg aria-hidden="true" focusable="false" data-icon="chevronDown" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></div></div><div class="field" data-component="field" data-variant="default"><label for="entry-status">状态</label><div class="select-wrap"><select class="control" data-component="control" data-variant="select" id="entry-status"><option>全部</option><option>启用中</option><option>停用中</option></select><svg aria-hidden="true" focusable="false" data-icon="chevronDown" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m6 9 6 6 6-6"/></svg></div></div><div class="filter-actions"><button class="button primary" data-component="button" data-variant="primary" type="button">查询</button><button class="button" data-component="button" data-variant="default" type="button">重置</button></div></div>
+    <section class="panel" data-component="panel" data-variant="default" aria-label="条目列表"><table data-component="table" data-variant="default"><colgroup><col style="width:80px"><col style="width:260px"><col style="width:180px"><col style="width:160px"><col></colgroup><thead><tr><th>序号</th><th>名称</th><th>分类</th><th>状态</th><th>操作</th></tr></thead><tbody>
+     <tr><td>1</td><td>示例条目一</td><td>分类一</td><td><span class="state-label" data-component="status-label" data-variant="default"><span class="state-dot"></span>启用中</span></td><td><div class="actions"><button class="text-button" data-component="button" data-variant="text" type="button">详情</button><button class="text-button" data-component="button" data-variant="text" type="button">编辑</button><button class="text-button" data-component="button" data-variant="text" type="button">停用</button></div></td></tr>
+     <tr><td>2</td><td>示例条目二</td><td>分类二</td><td><span class="state-label paused"><span class="state-dot"></span>停用中</span></td><td><div class="actions"><button class="text-button" data-component="button" data-variant="text" type="button">详情</button><button class="text-button" data-component="button" data-variant="text" type="button">编辑</button><button class="text-button" data-component="button" data-variant="text" type="button">启用</button></div></td></tr>
+     <tr><td>3</td><td>示例条目三</td><td>分类一</td><td><span class="state-label" data-component="status-label" data-variant="default"><span class="state-dot"></span>启用中</span></td><td><div class="actions"><button class="text-button" data-component="button" data-variant="text" type="button">详情</button><button class="text-button" data-component="button" data-variant="text" type="button">编辑</button><button class="text-button" data-component="button" data-variant="text" type="button">停用</button></div></td></tr>
+    </tbody></table><footer class="pagination" data-component="pagination" data-variant="default"><span>共 3 条</span><span class="space"></span><button class="page-button" data-component="button" data-variant="default" type="button" aria-label="上一页" disabled><svg aria-hidden="true" focusable="false" data-icon="chevronLeft" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m15 18-6-6 6-6"/></svg></button><button class="page-button active" data-component="button" data-variant="active" type="button" aria-current="page">1</button><button class="page-button" data-component="button" data-variant="default" type="button" aria-label="下一页" disabled><svg aria-hidden="true" focusable="false" data-icon="chevronRight" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="m9 18 6-6-6-6"/></svg></button><span>10 条/页</span></footer></section>
+   </div></section>
+  </div>
+ </article></div>
+ <div class="row"><article class="scene" data-component="scene-card" data-variant="default" id="scene-3a">
+  <header class="scene-head"><h2>3a · 组件与状态样例</h2><p>独立组件与状态参考，无先后流转；状态样例仅作样式核对，不代表产品功能要求。</p></header>
+  <div class="specimens">
+   <section class="specimen"><h3>操作与反馈</h3><div class="actions"><button class="button primary" data-component="button" data-variant="primary" type="button">保存</button><button class="button" data-component="button" data-variant="default" type="button">取消</button><button class="button" data-component="button" data-variant="default" type="button" disabled>不可操作</button></div><div class="actions"><button class="button danger" data-component="button" data-variant="danger" type="button">删除</button><button class="button icon-button" data-component="button" data-variant="icon" type="button" aria-label="刷新"><svg aria-hidden="true" focusable="false" data-icon="refresh" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12a9 9 0 0 1 9-9 9.75 9.75 0 0 1 6.74 2.74L21 8"/><path d="M21 3v5h-5"/><path d="M21 12a9 9 0 0 1-9 9 9.75 9.75 0 0 1-6.74-2.74L3 16"/><path d="M8 16H3v5"/></svg></button></div><div class="notice" data-component="notice" data-variant="success" role="status"><svg aria-hidden="true" focusable="false" data-icon="success" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m16 9-5.5 5.5L8 12"/></svg><span>操作成功</span></div><div class="notice failure" data-component="notice" data-variant="failure" role="status"><svg aria-hidden="true" focusable="false" data-icon="error" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg><span>操作失败</span></div><p class="sample-label">按钮与反馈独立示例</p></section>
+   <section class="specimen"><h3>选择与状态</h3><div class="field" data-component="field" data-variant="default"><label for="sample-input">名称</label><input class="control" data-component="control" data-variant="input" id="sample-input" placeholder="请输入" readonly></div><div class="switch-row"><button class="switch" data-component="switch" data-variant="on" type="button" role="switch" aria-checked="true" aria-label="启用状态"><span></span></button><span>启用中</span></div><div class="switch-row"><button class="switch off" data-component="switch" data-variant="off" type="button" role="switch" aria-checked="false" aria-label="停用状态"><span></span></button><span>停用中</span></div><label class="choice-row"><input data-component="choice" data-variant="checkbox" type="checkbox" checked disabled><span>已选择</span></label><label class="choice-row"><input data-component="choice" data-variant="radio" type="radio" name="sample-choice" checked disabled><span>默认选项</span></label><nav class="tabs" data-component="tabs" data-variant="default" aria-label="组件页签示例"><button class="tab active" data-component="tab" data-variant="active" type="button" aria-current="page">基础信息</button><button class="tab" data-component="tab" data-variant="default" type="button">关联信息</button></nav></section>
+   <section class="specimen"><h3>确认组件</h3><section class="confirmation" data-component="confirmation" data-variant="default" aria-label="删除条目确认样例"><header><h4>删除条目</h4><button class="button icon-button" data-component="button" data-variant="icon" type="button" aria-label="关闭"><svg aria-hidden="true" focusable="false" data-icon="close" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button></header><p>确认删除该条目？删除后无法恢复。</p><footer><button class="button" data-component="button" data-variant="default" type="button">取消</button><button class="button danger" data-component="button" data-variant="danger" type="button">删除</button></footer></section><p class="sample-label">只展示组件本体；是否确认由实际需求定义</p></section>
+   <section class="specimen" data-state-sample><h3>按钮状态</h3><div class="state-grid">
+    <div class="state-cell"><button class="button primary" data-component="button" data-variant="primary" data-state-sample type="button">默认</button><span class="sample-label">主操作 · 默认</span></div>
+    <div class="state-cell"><button class="button primary is-hover" data-component="button" data-variant="hover" data-state-sample type="button">悬停</button><span class="sample-label">主操作 · Hover</span></div>
+    <div class="state-cell"><button class="button primary is-focus" data-component="button" data-variant="focus" data-state-sample type="button">聚焦</button><span class="sample-label">主操作 · Focus</span></div>
+    <div class="state-cell"><button class="button primary is-press" data-component="button" data-variant="pressed" data-state-sample type="button">按下</button><span class="sample-label">主操作 · 按下</span></div>
+    <div class="state-cell"><button class="button primary" data-component="button" data-variant="primary" data-state-sample type="button" disabled>禁用</button><span class="sample-label">主操作 · 禁用</span></div>
+    <div class="state-cell"><button class="button primary is-loading" data-component="button" data-variant="loading" data-state-sample type="button" disabled>处理中</button><span class="sample-label">主操作 · 加载 · 防重复</span></div>
+   </div><p class="sample-label">状态只作样式核对，不代表业务可用性</p></section>
+   <section class="specimen" data-state-sample><h3>输入状态</h3><div class="state-stack">
+    <div class="state-cell"><span class="sample-label">默认 · 占位</span><input class="control" data-component="control" data-variant="input" id="state-input-default" data-state-sample placeholder="请输入" readonly></div>
+    <div class="state-cell"><span class="sample-label">已填写</span><input class="control" data-component="control" data-variant="input" id="state-input-filled" data-state-sample value="产品灵感与观察" readonly></div>
+    <div class="state-cell"><span class="sample-label">Focus</span><input class="control is-focus" data-component="control" data-variant="focus" id="state-input-focus" data-state-sample placeholder="请输入" readonly></div>
+    <div class="state-cell"><span class="sample-label">错误 · 必填项不能为空</span><input class="control is-error" data-component="control" data-variant="error" id="state-input-error" data-state-sample placeholder="请输入" readonly><span class="field-error">必填项不能为空</span></div>
+    <div class="state-cell"><span class="sample-label">只读</span><input class="control is-readonly" data-component="control" data-variant="readonly" id="state-input-readonly" data-state-sample value="不可编辑" readonly></div>
+    <div class="state-cell"><span class="sample-label">禁用</span><input class="control" data-component="control" data-variant="input" id="state-input-disabled" data-state-sample placeholder="请输入" disabled></div>
+   </div></section>
+   <section class="specimen" data-state-sample><h3>选择与反馈状态</h3><div class="state-stack">
+    <div class="state-cell"><span class="sample-label">Checkbox · 未选 / 选中 / 禁用</span><div class="actions"><label class="choice-row"><input data-component="choice" data-variant="checkbox" type="checkbox" disabled><span>未选</span></label><label class="choice-row"><input data-component="choice" data-variant="checkbox" type="checkbox" checked disabled><span>选中</span></label><label class="choice-row"><input data-component="choice" data-variant="checkbox" type="checkbox" checked disabled><span>禁用</span></label></div></div>
+    <div class="state-cell"><span class="sample-label">页签 · 当前 / 普通 / 禁用</span><nav class="tabs" data-component="tabs" data-variant="default" aria-label="页签状态样例"><button class="tab active" data-component="tab" data-variant="active" type="button" aria-current="page">当前</button><button class="tab" data-component="tab" data-variant="default" type="button">普通</button><button class="tab" data-component="tab" data-variant="default" type="button" disabled>禁用</button></nav></div>
+    <div class="state-cell"><span class="sample-label">反馈 · 成功 / 失败（图标 + 文字）</span><div class="notice" data-component="notice" data-variant="success" role="status"><svg aria-hidden="true" focusable="false" data-icon="success" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m16 9-5.5 5.5L8 12"/></svg><span>操作成功</span></div><div class="notice failure" data-component="notice" data-variant="failure" role="status"><svg aria-hidden="true" focusable="false" data-icon="error" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><circle cx="12" cy="12" r="10"/><path d="m15 9-6 6"/><path d="m9 9 6 6"/></svg><span>操作失败</span></div></div>
+    <div class="state-cell"><span class="sample-label">确认弹窗 · 默认态与加载态</span><section class="confirmation" data-component="confirmation" data-variant="default" aria-label="确认弹窗状态样例"><header><h4>删除条目</h4><button class="button icon-button" data-component="button" data-variant="icon" type="button" aria-label="关闭"><svg aria-hidden="true" focusable="false" data-icon="close" class="icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><path d="M18 6 6 18"/><path d="m6 6 12 12"/></svg></button></header><p>确认删除该条目？删除后无法恢复。</p><footer><button class="button" data-component="button" data-variant="default" type="button">取消</button><button class="button danger is-loading" data-component="button" data-variant="loading" type="button" disabled>处理中</button></footer></section></div>
+   </div><p class="sample-label">组件独立样例不是页面中的额外产品功能</p></section>
+  </div>
+ </article></div>
+</main>
+<script type="application/json" id="prototype-style">{
+  "profile": "personal",
+  "source": "references/个人风格设计规范.md",
+  "template": "references/个人风格原型模板.html",
+  "lockedAreas": [
+    "窄侧栏",
+    "深灰面板",
+    "控件 Token"
+  ],
+  "allowedChanges": [
+    "业务内容",
+    "当前菜单状态"
+  ],
+  "tokens": {},
+  "checks": [],
+  "states": [
+    {
+      "id": "1a",
+      "name": "工作概览",
+      "entry": "菜单"
+    },
+    {
+      "id": "2a",
+      "name": "条目列表",
+      "entry": "菜单"
+    },
+    {
+      "id": "3a",
+      "name": "组件与状态样例",
+      "relation": "独立对照"
+    }
+  ],
+  "flows": [],
+  "sampleData": true,
+  "sourceBasis": "参考预览归纳实现值，非 Figma 节点实测值。"
+}</script>
+<!-- 图标：Lucide 1.67.0（ISC），https://lucide.dev；路径直接复制自 Skill 登记资产。 -->
+</body></html>
