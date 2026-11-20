@@ -1,6 +1,6 @@
 # 产品经理工作 Skills
 
-这是一组面向产品经理工作的 Codex Skills，覆盖个人产品工作标准、中文功能型 PRD、HTML/Figma 产品原型，以及 IOT 业务提示词和标识符命名。
+这是一组面向产品经理工作的 Codex Skills，覆盖个人产品工作标准、中文功能型 PRD、HTML/Figma 产品原型、翻译词条检索，以及 IOT 业务提示词和标识符命名。
 
 当前版本：`V1.0`
 
@@ -11,9 +11,10 @@
 | `product-work-standards` | 区分个人标准、项目规范和当前任务要求，并路由到适用的专项 Skill |
 | `pm-execution-create-prd` | 创建、补写和评审可进入原型、研发与验收评审的中文功能型 PRD |
 | `pm-prototype-workflow` | 以 HTML 为设计源完成 UI、交互、状态覆盖和可编辑 Figma 原型交付 |
+| `pm-translation-copy` | 按 key、平台和语言检索翻译词条，安全复用 PRD 用户可见文案 |
 | `prompt-writing` | 编写、润色和检查 IOT 业务提示词，并按已确认词汇库定义和校验控制/属性物模型标识符 |
 
-四个 Skill 均按跨项目、可公开阅读和可独立安装的方式维护，不包含特定公司、品牌、项目目录、内部账号、私有链接或未脱敏业务数据。
+通用 Skills 按跨项目、可公开阅读和可独立安装的方式维护。`pm-translation-copy` 同时附带用户指定公开的翻译平台词条快照，安装后可离线检索。
 
 ## 安装
 
@@ -30,6 +31,7 @@ mkdir -p ~/.codex/skills
 cp -R product-manager-skills/product-work-standards ~/.codex/skills/
 cp -R product-manager-skills/pm-execution-create-prd ~/.codex/skills/
 cp -R product-manager-skills/pm-prototype-workflow ~/.codex/skills/
+cp -R product-manager-skills/pm-translation-copy ~/.codex/skills/
 cp -R product-manager-skills/prompt-writing ~/.codex/skills/
 ```
 
@@ -39,6 +41,7 @@ cp -R product-manager-skills/prompt-writing ~/.codex/skills/
 使用 $product-work-standards 判断这项规则属于个人标准还是项目规范。
 使用 $pm-execution-create-prd 创建一份可评审、可开发、可验收的中文 PRD。
 使用 $pm-prototype-workflow 根据已确认 PRD 制作可交互 HTML 原型。
+使用 $pm-translation-copy 按平台和语言检索 PRD 用户可见文案。
 使用 $prompt-writing 为指定 IOT 业务场景编写或润色提示词，并定义或校验控制功能标识符。
 ```
 
@@ -96,5 +99,6 @@ product-manager-skills/
 ├── product-work-standards/
 ├── pm-execution-create-prd/
 ├── pm-prototype-workflow/
+├── pm-translation-copy/
 └── prompt-writing/
 ```

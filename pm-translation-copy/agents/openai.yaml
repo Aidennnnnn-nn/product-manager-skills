@@ -1,0 +1,4 @@
+interface:
+  display_name: "项目翻译词条"
+  short_description: "检索并复用 PRD 用户可见文案"
+  default_prompt: "从随 Skill 安装的翻译词条目录检索 PRD 所需的用户可见文案，按平台和语言返回精确 key；找不到安全匹配时整理待新增翻译需求。"
